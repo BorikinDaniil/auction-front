@@ -8,8 +8,7 @@
 # testing
 /coverage
 
-# IDEs
-/.idea
+
 
 # next.js
 /.next/
