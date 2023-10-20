@@ -1,13 +1,12 @@
 import type { NextComponentType } from 'next';
 import { Button, Select, Form, Input } from 'antd';
 import styles from '../../../styles/Auth.module.scss';
-import  { UserRegistration } from '../../../types';
+import  { IUserRegistration } from '../../../types';
 import { setCookies } from '../../../utils/cookies';
 import userApi from '../../../api/user';
+import { handleError } from '../../../utils/validation';
 
 import { useRouter } from 'next/router';
-
-const { Option } = Select;
 
 // TODO: find error type
 const onFinishFailed = (errorInfo: any) => {
@@ -16,8 +15,8 @@ const onFinishFailed = (errorInfo: any) => {
 
 const RegistrationForm: NextComponentType = () => {
   const router = useRouter();
-  const onFinish = async(data: UserRegistration) => {
-    console.log('Success:', data);
+  const [form] = Form.useForm();
+  const onFinish = async(data: IUserRegistration) => {
 
     try {
       const { data: { token } } = await userApi.registration(data);
@@ -25,7 +24,7 @@ const RegistrationForm: NextComponentType = () => {
       setCookies('accessToken', token);
       await router.push('/');
     } catch (e: any) {
-      console.log('e', e);
+      handleError(form, e);
     }
   };
 
@@ -33,6 +32,7 @@ const RegistrationForm: NextComponentType = () => {
     <Form
       name="basic"
       layout="vertical"
+      form={form}
       className={styles['registration-form']}
       initialValues={{ remember: true }}
       onFinish={onFinish}
@@ -50,7 +50,7 @@ const RegistrationForm: NextComponentType = () => {
       <Form.Item
         label="Email"
         name="email"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: 'Please input your email!' }]}
       >
         <Input />
       </Form.Item>
