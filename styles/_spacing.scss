@@ -1,0 +1,73 @@
+$spaces: "";
+$sides: (top, bottom, left, right);
+
+$start: 1;
+$end: 50;
+
+$step: 5;
+$startWithStep: 11;
+$endWithStep: 20;
+
+// $spaces[1] = "", so $start + 1 to later set "" to $start
+@for $i from $start + 1 through $end {
+  $spaces: append($spaces, $i, comma);
+
+  //set "" to $start
+  $spaces: set-nth($spaces, 1, $start);
+}
+
+@for $i from $startWithStep through $endWithStep {
+  $spaces: append($spaces, ($i * $step), comma);
+}
+
+@each $space in $spaces {
+  @each $side in $sides {
+    .m#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space}px;
+    }
+
+    .p#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space}px;
+    }
+  }
+}
+
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mr-0 {
+  margin-right: 0;
+}
+
+.ml-0 {
+  margin-left: 0;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.pt-0 {
+  padding-top: 0 !important;
+}
+
+.pb-0 {
+  padding-bottom: 0;
+}
+
+.pr-0 {
+  padding-right: 0;
+}
+
+.pl-0 {
+  padding-left: 0;
+}
