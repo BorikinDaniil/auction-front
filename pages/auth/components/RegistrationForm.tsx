@@ -1,27 +1,28 @@
 import type { NextComponentType } from 'next';
 import { Button, Select, Form, Input } from 'antd';
 import styles from '../../../styles/Auth.module.scss';
-import  { IUserRegistration } from '../../../types';
-import { setCookies } from '../../../utils/cookies';
-import userApi from '../../../api/user';
-import { handleError } from '../../../utils/validation';
+import {IUserRegistration, User} from '@ITypes/index';
+import { setCookies } from '@utils/cookies';
+import userApi from '@api/user';
+import { handleError } from '@utils/validation';
 
 import { useRouter } from 'next/router';
-
-// TODO: find error type
-const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
-};
+import Link from 'next/link';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '@store/userSlice';
 
 const RegistrationForm: NextComponentType = () => {
   const router = useRouter();
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const setUser = (payload: User) => dispatch(setUserInfo(payload));
   const onFinish = async(data: IUserRegistration) => {
 
     try {
-      const { data: { token } } = await userApi.registration(data);
+      const { data: { token, user } } = await userApi.registration(data);
 
       setCookies('accessToken', token);
+      setUser(user);
       await router.push('/');
     } catch (e: any) {
       handleError(form, e);
@@ -36,9 +37,12 @@ const RegistrationForm: NextComponentType = () => {
       className={styles['registration-form']}
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
+      <h1>
+        Registration
+      </h1>
+
       <Form.Item
         label="Username"
         name="username"
@@ -98,9 +102,20 @@ const RegistrationForm: NextComponentType = () => {
         />
       </Form.Item>
 
+      <div className="form-link mt-20">
+        Do you have an account?&nbsp;
+        <Link href='/auth/login'>
+          Login
+        </Link>
+      </div>
+
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Registration
+        <Button
+          className="w-100 mt-20"
+          type="primary"
+          htmlType="submit"
+        >
+          Submit
         </Button>
       </Form.Item>
     </Form>

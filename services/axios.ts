@@ -1,4 +1,4 @@
-import { getToken, removeCookie } from '../utils/cookies';
+import { getToken, removeCookie } from '@utils/cookies';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import Router from 'next/router';
@@ -21,7 +21,6 @@ export const $axios = axios.create({
 });
 
 $axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  console.log('`context?.req?.cookies?.accessToken}`', context?.req?.cookies?.accessToken);
   const token = accessToken || context?.req?.cookies?.accessToken;
 
   if (token) {
@@ -44,7 +43,6 @@ $axios.interceptors.response.use(
 
       removeCookie('accessToken');
 
-      console.log('Router.push');
       await Router.push('auth/login');
     }
     return Promise.reject(error);

@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { FormInstance } from 'antd/es/form';
-import { IErrors } from '../types';
+import { IErrors } from '@ITypes/index';
 import { isEmpty } from 'lodash';
 
 export const addFormError = (form: FormInstance, error: AxiosError<IErrors>) => {
@@ -23,7 +23,8 @@ export const addFormError = (form: FormInstance, error: AxiosError<IErrors>) => 
 
 export const handleError = (form: FormInstance, e: any) => {
   const error = e as Error | AxiosError;
-  if(axios.isAxiosError<IErrors>(error)){
+
+  if (axios.isAxiosError<IErrors>(error)){
     addFormError(form, e);
   }
 };

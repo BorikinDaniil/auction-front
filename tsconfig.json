@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@utils/*": ["utils/*"],
+      "@ITypes/*": ["ITypes/*"],
+      "@api/*": ["api/*"],
+      "@Components/*": ["components/*"],
+      "@store/*": ["store/*"],
+    },
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

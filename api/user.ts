@@ -9,6 +9,10 @@ const userApi: { [key: string]: any } = {
   login(payload: object): Promise<object> {
     return $axios.post('/login', payload);
   },
+
+  getCurrentUser(): Promise<object> {
+    return $axios.get('/user/me');
+  },
 };
 
 export default userApi;
