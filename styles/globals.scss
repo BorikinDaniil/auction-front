@@ -2,6 +2,7 @@
 @import './_spacing.scss';
 @import './_positions.scss';
 @import './_antd.scss';
+@import 'varaibles';
 
 html,
 body {
@@ -10,11 +11,27 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0);
+    background-color: $primary;
+  }
 }
 
 .page {
   padding: 24px;
-  min-height: 100vh;
+  min-height: calc(100vh - 52px);
+
+  &__container {
+    max-width: 1160px;
+    margin: 0 auto;
+  }
 }
 
 h1 {

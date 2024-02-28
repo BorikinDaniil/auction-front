@@ -7,6 +7,9 @@ import { setContext } from '../services/axios';
 import userApi from '@api/user';
 import { User } from '@ITypes/index';
 import { setUserInfo } from '@store/userSlice';
+import Header from '@Components/Header';
+import { ConfigProvider } from 'antd';
+import { antdTheme } from '../constants/antd';
 
 type AppOwnProps = { user: User }
 
@@ -14,9 +17,14 @@ function MyApp({ Component, pageProps, user }: AppProps & AppOwnProps) {
   if (user) store.dispatch(setUserInfo(user));
 
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <ConfigProvider
+      theme={antdTheme}
+    >
+      <Provider store={store}>
+        <Header />
+        <Component {...pageProps} />
+      </Provider>
+    </ConfigProvider>
   );
 }
 

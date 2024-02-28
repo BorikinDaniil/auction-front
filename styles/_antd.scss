@@ -1,3 +1,5 @@
+@import "varaibles";
+
 .ant-form {
   padding: 24px;
   border-radius: 8px;
@@ -9,5 +11,16 @@
 
   .form-link {
     font-size: 20px;
+  }
+}
+
+.ant-btn-primary {
+  color: $black;
+  border: 1px solid $black;
+  font-weight: 600;
+
+  &:not(:disabled):not(.ant-btn-disabled):hover {
+    color: $black;
+    background-color: $primary-hover;
   }
 }

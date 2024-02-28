@@ -8,7 +8,7 @@ export const setCookies = (name: string, value: string) => {
   setCookie(name, value);
 };
 
-export const removeCookie = (name: string) => {
+export const removeCookie = (name: string = 'accessToken') => {
   deleteCookie(name);
 };
 

@@ -1,13 +1,23 @@
 import type { NextPage } from 'next';
-// import { useSelector } from 'react-redux';
-// import { IRootState } from '@ITypes/index';
+import { Button } from 'antd';
+import { useCallback } from 'react';
+import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
-  // const user = useSelector((state: IRootState) => state.user);
-  // console.log('user', user);
+  const router = useRouter();
+
+  const createNew = useCallback(async() => {
+    await router.push('/auctions/new');
+  }, [router]);
 
   return (
-    <div>Hello</div>
+    <div className="page">
+      <div className="page__container">
+        <h1>Auctions</h1>
+
+        <Button type="primary" onClick={createNew}>Add New</Button>
+      </div>
+    </div>
   );
 };
 
