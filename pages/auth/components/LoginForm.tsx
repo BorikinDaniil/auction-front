@@ -1,10 +1,9 @@
 import type { NextComponentType } from 'next';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 // Antd
-import { Button, Form, Input } from 'antd';
+import {Button, Checkbox, Form, Input} from 'antd';
 // Types
-import { IUserLogin, User } from '@ITypes/index';
+import { IUserLogin, User } from '@ITypes/user';
 // Utils
 import { setCookies } from '@utils/cookies';
 import userApi from '@api/user';
@@ -43,7 +42,7 @@ const RegistrationForm: NextComponentType = () => {
       onFinish={onFinish}
       autoComplete="off"
     >
-      <h1>
+      <h1 className="mb-30">
         Login
       </h1>
 
@@ -62,13 +61,11 @@ const RegistrationForm: NextComponentType = () => {
       >
         <Input.Password />
       </Form.Item>
-
-      <div className="form-link mt-20">
-        New user?&nbsp;
-        <Link href='/auth/registration'>
-          Registration
-        </Link>
-      </div>
+      <Form.Item>
+        <Checkbox>
+          Remember me
+        </Checkbox>
+      </Form.Item>
 
       <Form.Item>
         <Button
@@ -76,7 +73,7 @@ const RegistrationForm: NextComponentType = () => {
           type="primary"
           htmlType="submit"
         >
-          Submit
+          Login
         </Button>
       </Form.Item>
     </Form>

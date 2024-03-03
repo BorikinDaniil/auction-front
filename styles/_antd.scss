@@ -1,26 +1,52 @@
-@import "varaibles";
+@import "variables";
 
-.ant-form {
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 0 32px 0 rgba(0,0,0,0.75);
+#__next {
+  .ant-form {
+    padding: 24px 70px;
+    box-shadow: none;
+    background-color: $white;
 
-  .ant-form-item-label {
-    padding-bottom: 0;
+    .ant-form-item-label {
+      padding-bottom: 0;
+    }
+
+    .form-link {
+      font-size: 20px;
+    }
+
+    label {
+      color: $label-color
+    }
   }
 
-  .form-link {
-    font-size: 20px;
+  .ant-checkbox-inner {
+    width: 24px;
+    height: 24px;
+
+    &:after {
+      width: 9px;
+      height: 16px;
+      top: 40%;
+      inset-inline-start: 22%;
+    }
   }
-}
 
-.ant-btn-primary {
-  color: $black;
-  border: 1px solid $black;
-  font-weight: 600;
+  .ant-btn-primary {
+    height: 52px;
+    color: $white;
+    font-weight: 600;
+    font-size: 19px;
+    border: none;
+    border-radius: 26px;
 
-  &:not(:disabled):not(.ant-btn-disabled):hover {
-    color: $black;
-    background-color: $primary-hover;
+    &:not(:disabled):not(.ant-btn-disabled):hover {
+      color: $white;
+      background-color: $primary-hover;
+    }
+  }
+
+  .ant-input:not([type="password"]),
+  .ant-input-password {
+    height: 40px;
   }
 }

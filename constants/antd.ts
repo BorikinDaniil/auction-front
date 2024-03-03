@@ -1,5 +1,6 @@
 export const antdTheme = {
+  hashed: false,
   token: {
-    colorPrimary: '#0fb26a',
+    colorPrimary: '#16915a',
   },
 };

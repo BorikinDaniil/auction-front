@@ -5,11 +5,11 @@ import { Provider } from 'react-redux';
 import store from '@store/index';
 import { setContext } from '../services/axios';
 import userApi from '@api/user';
-import { User } from '@ITypes/index';
+import { User } from '@ITypes/user';
 import { setUserInfo } from '@store/userSlice';
 import Header from '@Components/Header';
 import { ConfigProvider } from 'antd';
-import { antdTheme } from '../constants/antd';
+import { antdTheme } from '@constants/antd';
 
 type AppOwnProps = { user: User }
 

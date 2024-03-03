@@ -2,7 +2,7 @@
 @import './_spacing.scss';
 @import './_positions.scss';
 @import './_antd.scss';
-@import 'varaibles';
+@import 'variables';
 
 html,
 body {
@@ -13,8 +13,8 @@ body {
   box-sizing: border-box;
 
   &::-webkit-scrollbar {
-    width: 12px;
-    background-color: #F5F5F5;
+    width: 6px;
+    background-color: $white;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -22,20 +22,32 @@ body {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0);
     background-color: $primary;
   }
+
+  h1 {
+    font-size: 40px;
+    line-height: 46px;
+  }
+
+  a {
+    color: white;
+    font-weight: 600;
+    text-decoration: underline;
+  }
 }
 
 .page {
   padding: 24px;
   min-height: calc(100vh - 52px);
+  background-color: $grey;
+
+  &.without-header {
+    min-height: 100vh;
+  }
 
   &__container {
-    max-width: 1160px;
+    max-width: 1240px;
     margin: 0 auto;
   }
-}
-
-h1 {
-  text-align: center;
 }
 
 .w-100 {

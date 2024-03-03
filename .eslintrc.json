@@ -26,6 +26,7 @@
     "curly": "off",
     "no-console": "off",
     "camelcase": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/no-unescaped-entities": "off"
   }
 }

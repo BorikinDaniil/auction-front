@@ -1,5 +1,31 @@
+@import "variables";
+
 .registration-form,
-.login-form {
-  min-width: 600px;
-  max-width: 600px;
+.login-form,
+.login-description {
+  width: 620px;
+  max-width: 620px;
+  padding: 24px 70px;
+}
+
+.registration-form,
+.login-form, {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.login-description {
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 120px;
+  text-align: center;
+  background-color: $primary;
+  color: $white;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
 }

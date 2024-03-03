@@ -1,7 +1,4 @@
 import store from '@store/index';
-// import { Store } from 'redux';
-// import {GetServerSidePropsContext, NextPageContext} from 'next';
-// import * as http from 'http';
 
 export interface IUser {
   username: string;
@@ -29,20 +26,5 @@ export type User = {
   username: string;
   gender: number;
 } | null;
-
-// interface INextReq extends http.IncomingMessage {
-//   cookies?: {
-//     [key: string]: string,
-//   },
-// }
-//
-// type NextReq = INextReq| undefined
-//
-// export interface IMyPageContext extends NextPageContext {
-//   store?: Store;
-//   req?: NextReq,
-// }
-//
-// export type MyPageContext = IMyPageContext | GetServerSidePropsContext
 
 export type IRootState = ReturnType<typeof store.getState>

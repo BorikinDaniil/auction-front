@@ -1,7 +1,7 @@
 import type { NextComponentType } from 'next';
 import { Button, Select, Form, Input } from 'antd';
 import styles from '../../../styles/Auth.module.scss';
-import {IUserRegistration, User} from '@ITypes/index';
+import {IUserRegistration, User} from '@ITypes/user';
 import { setCookies } from '@utils/cookies';
 import userApi from '@api/user';
 import { handleError } from '@utils/validation';
@@ -102,20 +102,13 @@ const RegistrationForm: NextComponentType = () => {
         />
       </Form.Item>
 
-      <div className="form-link mt-20">
-        Do you have an account?&nbsp;
-        <Link href='/auth/login'>
-          Login
-        </Link>
-      </div>
-
       <Form.Item>
         <Button
           className="w-100 mt-20"
           type="primary"
           htmlType="submit"
         >
-          Submit
+          Register
         </Button>
       </Form.Item>
     </Form>
