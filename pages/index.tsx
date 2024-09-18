@@ -1,10 +1,23 @@
-import type { NextPage } from 'next';
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { Button } from 'antd';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import auctionsApi from '@api/auctions';
+import { AuctionsList } from '../types/auctions';
+import { useDispatch } from 'react-redux';
+import { setAuctionsList } from '@store/auctinSlice';
 
-const Home: NextPage = () => {
+const Home = ({ auctions }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const setAuctionsData = useCallback(() => {
+    dispatch(setAuctionsList(auctions));
+  }, [auctions, dispatch]);
+
+  useEffect(() => {
+    setAuctionsData();
+  }, [setAuctionsData]);
 
   const createNew = useCallback(async() => {
     await router.push('/auctions/new');
@@ -20,5 +33,23 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+export const getServerSideProps: GetServerSideProps<{ auctions: AuctionsList }> = (async() => {
+  let auctions = [];
+
+  try {
+    auctions = (await auctionsApi.getAuctions()).data;
+
+  } catch (e: any) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: { auctions } };
+});
 
 export default Home;

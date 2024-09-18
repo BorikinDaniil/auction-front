@@ -31,22 +31,37 @@
     }
   }
 
-  .ant-btn-primary {
+  .ant-btn {
     height: 52px;
-    color: $white;
     font-weight: 600;
     font-size: 19px;
     border: none;
     border-radius: 26px;
 
+    &-primary {
+      color: $white;
+    }
+
     &:not(:disabled):not(.ant-btn-disabled):hover {
       color: $white;
       background-color: $primary-hover;
+    }
+
+    &.small {
+      height: 32px;
+      font-size: 14px;
+      border-radius: 16px;
     }
   }
 
   .ant-input:not([type="password"]),
   .ant-input-password {
     height: 40px;
+  }
+
+  @media (max-width: 767px) {
+    .ant-form {
+      padding: 12px;
+    }
   }
 }

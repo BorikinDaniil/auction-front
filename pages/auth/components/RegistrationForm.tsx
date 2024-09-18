@@ -1,23 +1,27 @@
-import type { NextComponentType } from 'next';
+import { FunctionComponent } from 'react';
 import { Button, Select, Form, Input } from 'antd';
-import styles from '../../../styles/Auth.module.scss';
-import {IUserRegistration, User} from '@ITypes/user';
-import { setCookies } from '@utils/cookies';
-import userApi from '@api/user';
-import { handleError } from '@utils/validation';
-
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { useDispatch } from 'react-redux';
+// Styles
+import styles from '../../../styles/Auth.module.scss';
+// Types
+import {IUserRegistration, User} from '../../../types/user';
+// Utils
+import { setCookies } from '@utils/cookies';
+import { handleError } from '@utils/validation';
+// API
+import userApi from '@api/user';
+// Store
 import { setUserInfo } from '@store/userSlice';
 
-const RegistrationForm: NextComponentType = () => {
+const RegistrationForm: FunctionComponent = () => {
   const router = useRouter();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const setUser = (payload: User) => dispatch(setUserInfo(payload));
-  const onFinish = async(data: IUserRegistration) => {
 
+  const setUser = (payload: User) => dispatch(setUserInfo(payload));
+
+  const onFinish = async(data: IUserRegistration): Promise<void> => {
     try {
       const { data: { token, user } } = await userApi.registration(data);
 

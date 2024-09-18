@@ -4,7 +4,7 @@ import { Button, Form, Input, Upload, message, DatePicker, UploadFile, InputNumb
 import { LockOutlined, MailOutlined, PictureOutlined, PlaySquareOutlined } from '@ant-design/icons';
 // Utils
 import { handleError } from '@utils/validation';
-import { FilesInfo, FileType, NewAuctionFormData } from '@ITypes/form';
+import { FilesInfo, FileType, NewAuctionFormData } from '../../types/form';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
 import { formatToTimeStamp } from '@utils/date';
 // API

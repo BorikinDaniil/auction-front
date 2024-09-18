@@ -3,7 +3,7 @@ import Link from 'next/link';
 // Styles
 import styles from '../../../styles/Auth.module.scss';
 // Types
-import { AuthDescriptionType } from '@ITypes/content';
+import { AuthDescriptionType } from '../../../types/content';
 const AuthDescription: FunctionComponent<{ content: AuthDescriptionType }> = ({ content }) => {
   return (
     <div className={styles['login-description']}>

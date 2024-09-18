@@ -5,7 +5,6 @@ const AUTHORIZED_ROTES = ['/', '/auctions/new'];
 
 export function middleware(request: NextRequest) {
   const cookie = request.cookies.get('accessToken');
-  console.log('cookie', cookie);
 
   if (!AUTHORIZED_ROTES.includes(request.nextUrl.pathname) && cookie) {
     return NextResponse.redirect(new URL('/', request.url));

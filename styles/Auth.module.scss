@@ -6,6 +6,10 @@
   width: 620px;
   max-width: 620px;
   padding: 24px 70px;
+
+  @media (max-width: 1360px) {
+    width: 50%;
+  }
 }
 
 .registration-form,
@@ -15,6 +19,11 @@
   justify-content: center;
   border-bottom-left-radius: 15px;
   border-top-left-radius: 15px;
+
+  @media (max-width: 1024px) {
+    border-radius: 15px;
+    width: 100%;
+  }
 }
 
 .login-description {
@@ -28,4 +37,12 @@
   color: $white;
   border-bottom-right-radius: 15px;
   border-top-right-radius: 15px;
+
+  @media (max-width: 1360px) {
+    padding: 24px 40px;
+  }
+  
+  @media (max-width: 1024px) {
+    display: none;
+  }
 }

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 // Antd
 import {Button, Checkbox, Form, Input} from 'antd';
 // Types
-import { IUserLogin, User } from '@ITypes/user';
+import { IUserLogin, User } from '../../../types/user';
 // Utils
 import { setCookies } from '@utils/cookies';
 import userApi from '@api/user';

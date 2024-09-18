@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from '@store/index';
 import { setContext } from '../services/axios';
 import userApi from '@api/user';
-import { User } from '@ITypes/user';
+import { User } from '../types/user';
 import { setUserInfo } from '@store/userSlice';
 import Header from '@Components/Header';
 import { ConfigProvider } from 'antd';

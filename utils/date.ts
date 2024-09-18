@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {DateValue} from '@ITypes/form';
+import { DateValue } from '../types/form';
 
 export const formatToTimeStamp = (date: DateValue) => {
   if (!date) return '';

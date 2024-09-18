@@ -1,17 +1,19 @@
-import React, {useCallback} from 'react';
-import styles from '../styles/Layout.module.scss';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { removeCookie } from '@utils/cookies';
-import Navigation from '@Components/Navigation';
-import { Button } from 'antd';
 import { useRouter } from 'next/router';
+// Utils
+import { removeCookie } from '@utils/cookies';
+// Component
+import Navigation from '@Components/Navigation';
+import { Button, Input } from 'antd';
+// Store
 import { setUserInfo } from '@store/userSlice';
-import { PAGES_WITHOUT_HEADER } from '../constants/common';
+// Styles
+import styles from '../styles/Layout.module.scss';
 
 const Header: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const isPageWithHeader = !PAGES_WITHOUT_HEADER.includes(router.pathname);
 
   const setUserDefaultInfo = useCallback(() => {
     dispatch(setUserInfo(null));
@@ -24,17 +26,23 @@ const Header: React.FC = () => {
   }, [router, setUserDefaultInfo]);
   
   return (
-    isPageWithHeader
-      ? <div className={styles.header}>
-      <Navigation />
-      <Button 
-        type="primary"
-        onClick={logout}
-      >
-        Logout
-      </Button>
-    </div> 
-      : null
+    <div className={styles.header}>
+      <div className={styles['header__container']}>
+        <Navigation />
+        <div className="mr-24 w-100">
+          <Input
+            className={styles['header__search']}
+            placeholder="Search for products..."
+          />
+        </div>
+        <Button
+          className="small"
+          onClick={logout}
+        >
+          Logout
+        </Button>
+      </div>
+    </div>
   );
 };
 

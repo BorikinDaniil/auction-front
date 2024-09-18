@@ -1,7 +1,7 @@
+@import './_antd.scss';
 @import '~antd/dist/reset.css';
 @import './_spacing.scss';
 @import './_positions.scss';
-@import './_antd.scss';
 @import 'variables';
 
 html,
@@ -26,6 +26,11 @@ body {
   h1 {
     font-size: 40px;
     line-height: 46px;
+
+    @media (max-width: 1024px) {
+      font-size: 32px;
+      line-height: 36px;
+    }
   }
 
   a {
@@ -40,13 +45,13 @@ body {
   min-height: calc(100vh - 52px);
   background-color: $grey;
 
-  &.without-header {
-    min-height: 100vh;
-  }
-
   &__container {
     max-width: 1240px;
     margin: 0 auto;
+  }
+
+  @media (max-width: 767px) {
+    padding: 12px;
   }
 }
 
