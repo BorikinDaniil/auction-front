@@ -3,17 +3,17 @@ import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 
 import store from '@store/index';
-import { setContext } from '../services/axios';
 import userApi from '@api/user';
-import { User } from '../types/user';
 import { setUserInfo } from '@store/userSlice';
 import Header from '@Components/Header';
 import { ConfigProvider } from 'antd';
 import { antdTheme } from '@constants/antd';
+import { User } from '../types/user';
+import { setContext } from '../services/axios';
 
 type AppOwnProps = { user: User }
 
-function MyApp({ Component, pageProps, user }: AppProps & AppOwnProps) {
+const MyApp = ({ Component, pageProps, user }: AppProps & AppOwnProps) => {
   if (user) store.dispatch(setUserInfo(user));
 
   return (
@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps, user }: AppProps & AppOwnProps) {
       </Provider>
     </ConfigProvider>
   );
-}
+};
 
 MyApp.getInitialProps = async(
   context: AppContext,
@@ -38,12 +38,10 @@ MyApp.getInitialProps = async(
 
   if (!accessToken) return { ...ctx, user };
 
-
   setContext(serverSidePropsContext);
 
   try {
     user = (await userApi.getCurrentUser()).data;
-
   } catch (e: any) {
     console.log(e);
   }

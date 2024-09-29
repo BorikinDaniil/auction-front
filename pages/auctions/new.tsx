@@ -1,14 +1,28 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
-import { Button, Form, Input, Upload, message, DatePicker, UploadFile, InputNumber } from 'antd';
-import { LockOutlined, MailOutlined, PictureOutlined, PlaySquareOutlined } from '@ant-design/icons';
-// Utils
-import { handleError } from '@utils/validation';
-import { FilesInfo, FileType, NewAuctionFormData } from '../../types/form';
-import { UploadRequestOption } from 'rc-upload/lib/interface';
-import { formatToTimeStamp } from '@utils/date';
+import {
+  Button,
+  Form,
+  Input,
+  Upload,
+  message,
+  DatePicker,
+  UploadFile,
+  InputNumber,
+} from 'antd';
+import {
+  LockOutlined,
+  MailOutlined,
+  PictureOutlined,
+  PlaySquareOutlined,
+} from '@ant-design/icons';
 // API
 import auctionApi from '@api/auctions';
+// Utils
+import { handleError } from '@utils/validation';
+import { formatToTimeStamp } from '@utils/date';
+import { UploadRequestOption } from 'rc-upload/lib/interface';
+import { FilesInfo, FileType, NewAuctionFormData } from '../../types/form';
 
 const { RangePicker } = DatePicker;
 
@@ -20,7 +34,7 @@ const NewAuction: NextPage = () => {
   const [videosList, setVideosList] = useState<FileType[]>([]);
   const [form] = Form.useForm();
 
-  const validateFileType = ({ type }: UploadFile, allowedTypes: string) => {
+  const validateFileType = ({ type }: UploadFile, allowedTypes: string): boolean => {
     if (!allowedTypes) {
       return true;
     }
@@ -28,6 +42,8 @@ const NewAuction: NextPage = () => {
     if (type) {
       return allowedTypes.includes(type);
     }
+
+    return false;
   };
 
   const beforeUpload = (file: FileType, allowedTypes: string) => {
@@ -39,7 +55,11 @@ const NewAuction: NextPage = () => {
       return Upload.LIST_IGNORE;
     }
 
-    format === 'png' ? setImagesList([file]) : setVideosList([file]);
+    if (format === 'png') {
+      setImagesList([file]);
+    } else {
+      setVideosList([file]);
+    }
 
     return true;
   };
@@ -87,7 +107,6 @@ const NewAuction: NextPage = () => {
 
   const onChangeImagesList = (info: FilesInfo) => {
     if (info.file.originFileObj) setImagesList([info.file.originFileObj]);
-
   };
 
   const onChangeVideosList = (info: FilesInfo) => {
@@ -96,155 +115,155 @@ const NewAuction: NextPage = () => {
 
   return (
     <div className="page">
-    <div className="page__container">
-      <h1>New Auction</h1>
+      <div className="page__container">
+        <h1>New Auction</h1>
 
-      <Form
-        className="add-room__form"
-        name="addRoom"
-        form={form}
-        onFinish={handleAddRoom}
-      >
-        <Form.Item
-          name="productName"
-          rules={[{
-            min: 4,
-            max: 256,
-            required: true,
-          }]}
-          validateTrigger="onSubmit"
+        <Form
+          className="add-room__form"
+          name="addRoom"
+          form={form}
+          onFinish={handleAddRoom}
         >
-          <Input
-            prefix={<MailOutlined className="site-form-item-icon" />}
-            placeholder="Room name"
-            type="text"
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="productDescription"
-          rules={[{
-            required: true,
-            min: 4,
-            max: 1024,
-          }]}
-          validateTrigger="onSubmit"
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="text"
-            placeholder="Description"
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="startPrice"
-          rules={[{
-            required: true,
-          }]}
-          validateTrigger="onSubmit"
-        >
-          <InputNumber
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            min={1}
-            max={100000000}
-            placeholder=""
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="step"
-          rules={[{
-            required: true,
-          }]}
-          validateTrigger="onSubmit"
-        >
-          <InputNumber
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            min={1}
-            max={1000000}
-            placeholder=""
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="period"
-          rules={[{
-            required: true,
-          }]}
-          validateTrigger="onSubmit"
-        >
-          <RangePicker
-            showTime={{ format: 'HH:mm' }}
-            format="YYYY-MM-DD HH:mm"
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="image"
-          valuePropName="imagesList"
-          rules={[{
-            required: true,
-          }]}
-        >
-          <Dragger
-            name="file"
-            multiple={false}
-            customRequest={setSuccessUploadStatus}
-            onChange={onChangeImagesList}
-            beforeUpload={file => beforeUpload(file, 'image/png')}
+          <Form.Item
+            name="productName"
+            rules={[{
+              min: 4,
+              max: 256,
+              required: true,
+            }]}
+            validateTrigger="onSubmit"
           >
-            <p className="ant-upload-drag-icon">
-              <PictureOutlined />
-            </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload room image</p>
-          </Dragger>
-        </Form.Item>
-
-        <Form.Item
-          name="video"
-          valuePropName="videosList"
-          rules={[{
-            required: true,
-          }]}
-        >
-          <Dragger
-            name="file"
-            multiple={false}
-            customRequest={setSuccessUploadStatus}
-            onChange={onChangeVideosList}
-            beforeUpload={file => beforeUpload(file, 'video/mp4')}
-          >
-            <p className="ant-upload-drag-icon">
-              <PlaySquareOutlined />
-            </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload room video</p>
-          </Dragger>
-        </Form.Item>
-
-        <div className="add-room__form--actions">
-          <Form.Item>
-            {/*<Button*/}
-            {/*  onClick={handleCloseModal}*/}
-            {/*>*/}
-            {/*  Cancel*/}
-            {/*</Button>*/}
+            <Input
+              prefix={<MailOutlined className="site-form-item-icon" />}
+              placeholder="Room name"
+              type="text"
+            />
           </Form.Item>
 
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form__submit"
-              loading={isLoading}
+          <Form.Item
+            name="productDescription"
+            rules={[{
+              required: true,
+              min: 4,
+              max: 1024,
+            }]}
+            validateTrigger="onSubmit"
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="text"
+              placeholder="Description"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="startPrice"
+            rules={[{
+              required: true,
+            }]}
+            validateTrigger="onSubmit"
+          >
+            <InputNumber
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              min={1}
+              max={100000000}
+              placeholder=""
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="step"
+            rules={[{
+              required: true,
+            }]}
+            validateTrigger="onSubmit"
+          >
+            <InputNumber
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              min={1}
+              max={1000000}
+              placeholder=""
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="period"
+            rules={[{
+              required: true,
+            }]}
+            validateTrigger="onSubmit"
+          >
+            <RangePicker
+              showTime={{ format: 'HH:mm' }}
+              format="YYYY-MM-DD HH:mm"
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="image"
+            valuePropName="imagesList"
+            rules={[{
+              required: true,
+            }]}
+          >
+            <Dragger
+              name="file"
+              multiple={false}
+              customRequest={setSuccessUploadStatus}
+              onChange={onChangeImagesList}
+              beforeUpload={file => beforeUpload(file, 'image/png')}
             >
-              Add Auction
-            </Button>
+              <p className="ant-upload-drag-icon">
+                <PictureOutlined />
+              </p>
+              <p className="ant-upload-text">Click or drag file to this area to upload room image</p>
+            </Dragger>
           </Form.Item>
-        </div>
-      </Form>
-  </div>
-  </div>
+
+          <Form.Item
+            name="video"
+            valuePropName="videosList"
+            rules={[{
+              required: true,
+            }]}
+          >
+            <Dragger
+              name="file"
+              multiple={false}
+              customRequest={setSuccessUploadStatus}
+              onChange={onChangeVideosList}
+              beforeUpload={file => beforeUpload(file, 'video/mp4')}
+            >
+              <p className="ant-upload-drag-icon">
+                <PlaySquareOutlined />
+              </p>
+              <p className="ant-upload-text">Click or drag file to this area to upload room video</p>
+            </Dragger>
+          </Form.Item>
+
+          <div className="add-room__form--actions">
+            <Form.Item>
+              {/* <Button */}
+              {/*  onClick={handleCloseModal} */}
+              {/* > */}
+              {/*  Cancel */}
+              {/* </Button> */}
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form__submit"
+                loading={isLoading}
+              >
+                Add Auction
+              </Button>
+            </Form.Item>
+          </div>
+        </Form>
+      </div>
+    </div>
   );
 };
 

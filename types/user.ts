@@ -1,30 +1,29 @@
 import store from '@store/index';
 
-export interface IUser {
+export type User = {
+  id: string;
   username: string;
+} | null;
+
+export type UserPayload = {
   email: string;
-  gender: number;
+  username: string;
 }
-export interface IUserRegistration extends IUser {
+
+export type UserLogin = {
+  email: string;
+  password: string;
+}
+
+export type UserRegistration = {
   password: string;
   passwordConfirm: string;
-}
+} & UserPayload;
 
-export interface IUserLogin {
-  username: string;
-  email: string;
-}
-
-export interface IErrors {
+export type Errors = {
   errors: {
     [key: string]: string;
   };
 }
-
-export type User = {
-  id: string;
-  username: string;
-  gender: number;
-} | null;
 
 export type IRootState = ReturnType<typeof store.getState>

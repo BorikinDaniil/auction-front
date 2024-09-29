@@ -24,14 +24,14 @@ const Header: React.FC = () => {
     removeCookie();
     await router.push('/auth/login');
   }, [router, setUserDefaultInfo]);
-  
+
   return (
     <div className={styles.header}>
-      <div className={styles['header__container']}>
+      <div className={styles.header__container}>
         <Navigation />
         <div className="mr-24 w-100">
           <Input
-            className={styles['header__search']}
+            className={styles.header__search}
             placeholder="Search for products..."
           />
         </div>

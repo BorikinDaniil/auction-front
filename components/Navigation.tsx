@@ -4,17 +4,16 @@ import {
   MailOutlined,
 } from '@ant-design/icons';
 
-
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import styles from '../styles/Layout.module.scss';
 import Link from 'next/link';
 import { PAGES_WITHOUT_HEADER } from '@constants/common';
+import styles from '../styles/Layout.module.scss';
 
 const items: MenuProps['items'] = [
   {
     label: (
-      <Link href='/'>
+      <Link href="/">
         Home
       </Link>
     ),
@@ -24,7 +23,7 @@ const items: MenuProps['items'] = [
 ];
 
 const authItems: MenuProps['items'] = [
-  
+
 ];
 
 const Navigation: React.FC = () => {
@@ -35,7 +34,6 @@ const Navigation: React.FC = () => {
   const isAuthPage = PAGES_WITHOUT_HEADER.includes(router.pathname);
 
   const menuItems = isAuthPage ? authItems : items;
-  
 
   return (
     <div className={styles.navigation}>

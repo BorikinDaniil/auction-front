@@ -1,8 +1,13 @@
 {
   "extends": [
+    // "airbnb",
+    // "airbnb/hooks",
+    // TODO: Fix error (Failed to load plugin '@typescript-eslint' declared in '.eslintrc.json » eslint-config-airbnb-typescript)
+    // "airbnb-typescript",
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended"
+    // "next"
   ],
   "parserOptions": {
     "parser": "babel-eslint",
@@ -28,5 +33,31 @@
     "camelcase": "off",
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off"
+//    "react/jsx-props-no-spreading": "off",
+//    "import/extensions": [
+//      "error",
+//      "ignorePackages",
+//      {
+//        "js": "never",
+//        "jsx": "never",
+//        "ts": "never",
+//        "tsx": "never"
+//      }
+//    ],
+//    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
+//    "react/function-component-definition": [
+//      2,
+//      {
+//        "namedComponents": "arrow-function",
+//        "unnamedComponents": "arrow-function"
+//      }
+//    ]
+//  },
+//  "settings": {
+//    "import/core-modules": [
+//      "@ant-design/icons",
+//      "rc-upload/lib/interface",
+//      "@ant-design/cssinjs"
+//    ]
   }
 }

@@ -1,16 +1,18 @@
 import type { NextComponentType } from 'next';
 import { useRouter } from 'next/router';
 // Antd
-import {Button, Checkbox, Form, Input} from 'antd';
+import {
+  Button, Checkbox, Form, Input,
+} from 'antd';
 // Types
-import { IUserLogin, User } from '../../../types/user';
 // Utils
 import { setCookies } from '@utils/cookies';
 import userApi from '@api/user';
 import { handleError } from '@utils/validation';
 // Store
-import  { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUserInfo } from '@store/userSlice';
+import { UserLogin, User } from '../../../types/user';
 // Styles
 import styles from '../../../styles/Auth.module.scss';
 
@@ -19,8 +21,7 @@ const RegistrationForm: NextComponentType = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const setUser = (payload: User) => dispatch(setUserInfo(payload));
-  const onFinish = async(data: IUserLogin) => {
-
+  const onFinish = async(data: UserLogin) => {
     try {
       const { data: { token, user } } = await userApi.login(data);
 

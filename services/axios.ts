@@ -3,7 +3,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import Router from 'next/router';
 
-let accessToken = getToken();
+const accessToken = getToken();
 let context = <GetServerSidePropsContext>{};
 
 export const setContext = (_context: GetServerSidePropsContext) => {
@@ -22,29 +22,35 @@ export const $axios = axios.create({
 
 $axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   const token = accessToken || context?.req?.cookies?.accessToken;
+  const newConfig = { ...config };
 
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    newConfig.headers.Authorization = `Bearer ${token}`;
   }
 
-  return config;
+  return newConfig;
 });
 
 $axios.interceptors.response.use(
-  response => {
-    return response;
-  },
+  response => response,
   async(error: AxiosError) => {
     // check conditions to refresh token
     if (error.response?.status === 401) {
-      context.res.setHeader(
-        'Set-Cookie', ['accessToken=""; Max-Age=0'],
-      );
+      if (context?.res?.setHeader) {
+        context.res.setHeader('Set-Cookie', ['accessToken=""; Max-Age=0']);
+      }
 
       removeCookie('accessToken');
 
-      await Router.push('auth/login');
+      if (typeof window !== 'undefined') {
+        await Router.push('auth/login');
+
+        return;
+      }
+
+      return Promise.reject(error);
     }
+
     return Promise.reject(error);
   },
 );

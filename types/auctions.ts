@@ -1,6 +1,6 @@
 import { User } from './user';
 
-export interface Auction {
+export type Auction = {
   image : string;
   startAt: string;
   endAt: string;

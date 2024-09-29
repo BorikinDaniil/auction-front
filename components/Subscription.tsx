@@ -10,14 +10,14 @@ const Subscription: FunctionComponent = () => {
   const onFinish = () => {
 
   };
-  
+
   return (
     <div className={styles.subscription}>
-      <div className={styles['subscription__title']}>
+      <div className={styles.subscription__title}>
         STAY UPTO DATE ABOUT OUR LATEST AUCTIONS
       </div>
 
-      <div className={styles['subscription__form']}>
+      <div className={styles.subscription__form}>
         <Form
           name="subscription"
           layout="vertical"

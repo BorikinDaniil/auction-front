@@ -1,11 +1,11 @@
 import { FunctionComponent } from 'react';
-import { Button, Select, Form, Input } from 'antd';
+import {
+  Button, Select, Form, Input,
+} from 'antd';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 // Styles
-import styles from '../../../styles/Auth.module.scss';
 // Types
-import {IUserRegistration, User} from '../../../types/user';
 // Utils
 import { setCookies } from '@utils/cookies';
 import { handleError } from '@utils/validation';
@@ -13,6 +13,8 @@ import { handleError } from '@utils/validation';
 import userApi from '@api/user';
 // Store
 import { setUserInfo } from '@store/userSlice';
+import { UserRegistration, User } from '../../../types/user';
+import styles from '../../../styles/Auth.module.scss';
 
 const RegistrationForm: FunctionComponent = () => {
   const router = useRouter();
@@ -21,7 +23,7 @@ const RegistrationForm: FunctionComponent = () => {
 
   const setUser = (payload: User) => dispatch(setUserInfo(payload));
 
-  const onFinish = async(data: IUserRegistration): Promise<void> => {
+  const onFinish = async(data: UserRegistration): Promise<void> => {
     try {
       const { data: { token, user } } = await userApi.registration(data);
 
@@ -64,16 +66,6 @@ const RegistrationForm: FunctionComponent = () => {
       </Form.Item>
 
       <Form.Item
-        name="gender"
-        label="Gender"
-        rules={[{ required: true, message: 'Please select gender!' }]}
-      >
-        <Select
-          placeholder="select your gender"
-          options={[{ value: 1, label: 'Male' }, { value: 2, label: 'Female' }]} />
-      </Form.Item>
-
-      <Form.Item
         label="Password"
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
@@ -87,14 +79,14 @@ const RegistrationForm: FunctionComponent = () => {
         rules={[{
           required: true,
         },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error('The two passwords that you entered do not match!'));
-            },
-          }),
+        ({ getFieldValue }) => ({
+          validator(_, value) {
+            if (!value || getFieldValue('password') === value) {
+              return Promise.resolve();
+            }
+            return Promise.reject(new Error('The two passwords that you entered do not match!'));
+          },
+        }),
         ]}
         validateTrigger="onSubmit"
       >

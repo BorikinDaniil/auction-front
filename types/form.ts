@@ -9,12 +9,12 @@ export type DateValue = Dayjs | null;
 
 type RangeValue = [DateValue, DateValue];
 
-export interface FilesInfo {
+export type FilesInfo = {
   file: UploadFile;
   fileList: UploadFile[];
 }
 
-export interface NewAuctionFormData {
+export type NewAuctionFormData = {
   image : FilesInfo;
   period: RangeValue;
   productDescription: string;

@@ -1,4 +1,4 @@
-export interface AuthDescriptionType {
+export type AuthDescriptionType = {
   title: string;
   description: string;
   linkAnswer: string;
