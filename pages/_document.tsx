@@ -1,6 +1,10 @@
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 import Document, {
-  DocumentInitialProps, Head, Html, Main, NextScript,
+  DocumentInitialProps,
+  Head,
+  Html,
+  Main,
+  NextScript,
 } from 'next/document';
 import type { DocumentContext } from 'next/document';
 

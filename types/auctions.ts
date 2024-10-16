@@ -12,4 +12,8 @@ export type Auction = {
   owner: User;
 }
 
+export type AuctionParams = {
+  productName?: string;
+}
+
 export type AuctionsList = Auction[] | []

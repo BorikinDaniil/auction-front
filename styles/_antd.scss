@@ -59,6 +59,11 @@
     height: 40px;
   }
 
+  #basic_password,
+  #basic_passwordConfirm {
+    height: 30px;
+  }
+
   @media (max-width: 767px) {
     .ant-form {
       padding: 12px;

@@ -1,8 +1,7 @@
 {
   "extends": [
-    // "airbnb",
+     // "airbnb",
     // "airbnb/hooks",
-    // TODO: Fix error (Failed to load plugin '@typescript-eslint' declared in '.eslintrc.json » eslint-config-airbnb-typescript)
     // "airbnb-typescript",
     "next/core-web-vitals",
     "eslint:recommended",

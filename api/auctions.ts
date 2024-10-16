@@ -1,11 +1,12 @@
 import { $axios } from '../services/axios';
+import { AuctionApi } from "../types/api";
 
-const auctionApi: { [key: string]: any } = {
-  getAuctions(params: object): Promise<object> {
-  return $axios.get('/auctions', params);
+const auctionApi: AuctionApi = {
+  getAuctions(params) {
+    return $axios.get('/auctions', { params });
   },
 
-  createAuction(payload: object): Promise<object> {
+  createAuction(payload) {
     return $axios.post('/auctions', payload, { headers: { 'Content-Type': 'multipart/form-data' } });
   },
 };

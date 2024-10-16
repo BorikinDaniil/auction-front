@@ -1,5 +1,5 @@
-import type { NextPage } from 'next';
-import { useState } from 'react';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Form,
@@ -23,16 +23,32 @@ import { handleError } from '@utils/validation';
 import { formatToTimeStamp } from '@utils/date';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
 import { FilesInfo, FileType, NewAuctionFormData } from '../../types/form';
+import { CategoriesList } from "../../types/categories";
+import categoriesApi from "@api/categories";
 
 const { RangePicker } = DatePicker;
 
 const { Dragger } = Upload;
 
-const NewAuction: NextPage = () => {
+export const getServerSideProps: GetServerSideProps<{ categories: CategoriesList }> = (async() => {
+  let categories = [];
+
+  try {
+    categories = (await categoriesApi.getCategories())?.data || [];
+  } catch (e: any) {}
+
+  return { props: { categories } };
+});
+
+const NewAuction = ({ categories }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [imagesList, setImagesList] = useState<FileType[]>([]);
   const [videosList, setVideosList] = useState<FileType[]>([]);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    console.log('categories', categories)
+  })
 
   const validateFileType = ({ type }: UploadFile, allowedTypes: string): boolean => {
     if (!allowedTypes) {

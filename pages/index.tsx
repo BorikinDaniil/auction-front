@@ -11,9 +11,8 @@ export const getServerSideProps: GetServerSideProps<{ auctions: AuctionsList }> 
   let auctions = [];
 
   try {
-    auctions = (await auctionsApi.getAuctions()).data;
+    auctions = (await auctionsApi.getAuctions())?.data || [];
   } catch (e: any) {
-    console.log('e', e);
     return {
       redirect: {
         destination: e.response?.status === 401 ? '/auth/login' : '/404',
