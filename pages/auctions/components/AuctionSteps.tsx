@@ -1,37 +1,40 @@
 import React from 'react';
+// Components
 import {
-  LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined,
+  FileImageOutlined,
+  SolutionOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { StepProps, Steps } from 'antd';
 
-const AuctionSteps: React.FC = () => {
-  const [items, setItems] = React.useState<StepProps[]>([
-    {
-      title: 'Description',
-      status: 'process',
-      icon: <UserOutlined />,
-    },
-    {
-      title: 'Categories',
-      status: 'wait',
-      icon: <SolutionOutlined />,
-    },
-    {
-      title: 'Media',
-      status: 'wait',
-      icon: <LoadingOutlined />,
-    },
-    {
-      title: 'Done',
-      status: 'wait',
-      icon: <SmileOutlined />,
-    },
-  ]);
+type StepsProps = {
+  current: number
+}
+
+const items = [
+  {
+    title: 'Description',
+    icon: <UserOutlined />,
+  },
+  {
+    title: 'Categories',
+    icon: <SolutionOutlined />,
+  },
+  {
+    title: 'Media',
+    icon: <FileImageOutlined />,
+  },
+] as StepProps[];
+
+const AuctionSteps: React.FC<StepsProps> = ({ current }) => {
 
   return (
-    <Steps
-      items={items}
-    />
+    <div className="mb-12">
+      <Steps
+        items={items}
+        current={current}
+      />
+    </div>
   );
 };
 

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import {
-  MailOutlined,
-} from '@ant-design/icons';
-
-import type { MenuProps } from 'antd';
+// Components
+import { MailOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import Link from 'next/link';
+// Types
+import type { MenuProps } from 'antd';
+// Constants
 import { PAGES_WITHOUT_HEADER } from '@constants/common';
-import styles from '../styles/Layout.module.scss';
+// Styles
+import styles from '@styles/Layout.module.scss';
 
 const items: MenuProps['items'] = [
   {

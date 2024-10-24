@@ -1,7 +1,9 @@
 import axios, { AxiosError } from 'axios';
-import { FormInstance } from 'antd/es/form';
-import { Errors } from '../types/user';
+// Utils
 import { isEmpty } from 'lodash';
+// Types
+import { FormInstance } from 'antd/es/form';
+import { Errors } from '@Types/user';
 
 export const addFormError = (form: FormInstance, error: AxiosError<Errors>) => {
   const errors = error?.response?.data?.errors;

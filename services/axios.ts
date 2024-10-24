@@ -1,7 +1,11 @@
-import { getToken, removeCookie } from '@utils/cookies';
-import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { GetServerSidePropsContext } from 'next';
 import Router from 'next/router';
+// Utils
+import { getToken, removeCookie } from '@utils/cookies';
+// Services
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+// Types
+import { GetServerSidePropsContext } from 'next';
+
 
 const accessToken = getToken();
 let context = <GetServerSidePropsContext>{};

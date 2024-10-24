@@ -1,11 +1,15 @@
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import { Button } from 'antd';
 import { useCallback, useEffect } from 'react';
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import auctionsApi from '@api/auctions';
+// Store
 import { useDispatch } from 'react-redux';
 import { setAuctionsList } from '@store/auctinSlice';
-import { AuctionsList } from '../types/auctions';
+// Components
+import { Button } from 'antd';
+// API
+import auctionsApi from '@api/auctions';
+// Types
+import { AuctionsList } from '@Types/auctions';
 
 export const getServerSideProps: GetServerSideProps<{ auctions: AuctionsList }> = (async() => {
   let auctions = [];

@@ -2,28 +2,36 @@ import type { NextComponentType } from 'next';
 import { useRouter } from 'next/router';
 // Antd
 import {
-  Button, Checkbox, Form, Input,
+  Button,
+  Checkbox,
+  Form,
+  Input,
 } from 'antd';
-// Types
 // Utils
 import { setCookies } from '@utils/cookies';
-import userApi from '@api/user';
 import { handleError } from '@utils/validation';
+import { selectIsDesktop } from '@utils/store';
+// API
+import userApi from '@api/user';
 // Store
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '@store/userSlice';
-import { UserLogin, User } from '../../../types/user';
+// Types
+import { UserLogin, User } from '@Types/user';
 // Styles
-import styles from '../../../styles/Auth.module.scss';
+import styles from '@styles/Auth.module.scss';
 
-const RegistrationForm: NextComponentType = () => {
+const LoginForm: NextComponentType = () => {
   const router = useRouter();
   const [form] = Form.useForm();
+
   const dispatch = useDispatch();
+
   const setUser = (payload: User) => dispatch(setUserInfo(payload));
+
   const onFinish = async(data: UserLogin) => {
     try {
-      const { data: { token, user } } = await userApi.login(data);
+      const { token, user } = (await userApi.login(data))?.data || {};
 
       setCookies('accessToken', token);
       setUser(user);
@@ -32,6 +40,8 @@ const RegistrationForm: NextComponentType = () => {
       handleError(form, e);
     }
   };
+
+  const isDesktop = useSelector(selectIsDesktop);
 
   return (
     <Form
@@ -52,7 +62,8 @@ const RegistrationForm: NextComponentType = () => {
         name="email"
         rules={[{ required: true, message: 'Please input your email!' }]}
       >
-        <Input />
+        {/*TODO: unify size prop condition*/}
+        <Input size={isDesktop ? 'large' : 'middle'} />
       </Form.Item>
 
       <Form.Item
@@ -60,7 +71,7 @@ const RegistrationForm: NextComponentType = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input.Password />
+        <Input.Password size={isDesktop ? 'large' : 'middle'} />
       </Form.Item>
       <Form.Item>
         <Checkbox>
@@ -81,4 +92,4 @@ const RegistrationForm: NextComponentType = () => {
   );
 };
 
-export default RegistrationForm;
+export default LoginForm;

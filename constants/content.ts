@@ -1,4 +1,5 @@
-import { AuthDescriptionType } from '../types/content';
+// Types
+import { AuthDescriptionType } from '@Types/content';
 
 export const LOGIN_DESCRIPTION:AuthDescriptionType = {
   title: 'Welcome back!',

@@ -1,15 +1,21 @@
-import '../styles/globals.scss';
+import '@styles/globals.scss';
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
+// Store
 import { Provider } from 'react-redux';
-
 import store from '@store/index';
-import userApi from '@api/user';
 import { setUserInfo } from '@store/userSlice';
+// API
+import userApi from '@api/user';
+// Components
 import Header from '@Components/Header';
 import { ConfigProvider } from 'antd';
+// Constants
 import { antdTheme } from '@constants/antd';
-import { User } from '../types/user';
-import { setContext } from '../services/axios';
+// Types
+import { User } from '@Types/user';
+// Services
+import { setContext } from '@services/axios';
+
 
 type AppOwnProps = { user: User }
 
@@ -41,9 +47,9 @@ MyApp.getInitialProps = async(
   setContext(serverSidePropsContext);
 
   try {
-    user = (await userApi.getCurrentUser()).data;
+    user = (await userApi.getCurrentUser())?.data;
   } catch (e: any) {
-    console.log(e);
+    console.error(e);
   }
 
   return { ...ctx, user };

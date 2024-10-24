@@ -1,27 +1,78 @@
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 // Utils
 import { removeCookie } from '@utils/cookies';
+import { selectIsDesktop } from '@utils/store';
 // Component
 import Navigation from '@Components/Navigation';
 import { Button, Input } from 'antd';
 // Store
 import { setUserInfo } from '@store/userSlice';
+import { setIsMobile, setIsTablet } from '@store/uiSlice';
 // Styles
-import styles from '../styles/Layout.module.scss';
+import styles from '@styles/Layout.module.scss';
+// Types
+import { RootState } from '@Types/user';
 
 const Header: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const setIsMobileView = useCallback((payload: boolean) => dispatch(setIsMobile(payload)), [dispatch]);
+  const setIsTabletView = useCallback((payload: boolean) => dispatch(setIsTablet(payload)), [dispatch]);
+  
+  const isTablet = useSelector((state: RootState) => state.ui.isTablet);
+  const isMobile = useSelector((state: RootState) => state.ui.isMobile);
+  const isDesktop = useSelector(selectIsDesktop);
+
   const setUserDefaultInfo = useCallback(() => {
     dispatch(setUserInfo(null));
   }, [dispatch]);
 
+  const checkWidth = useCallback(() => {
+    if (!window) return;
+
+    const { innerWidth } = window;
+
+    if (innerWidth <= 1024 && innerWidth > 767 && !isTablet) {
+      setIsTabletView(true);
+
+      return;
+    }
+
+    if (innerWidth <= 767 && !isMobile) {
+      setIsMobileView(true);
+
+      return;
+    }
+
+    if ((isMobile || isTablet) && innerWidth > 1024) {
+      setIsMobileView(false);
+      setIsTabletView(false);
+    }
+  }, [isMobile, isTablet, setIsTabletView, setIsMobileView]);
+
+  const addListener = useCallback(() => {
+    if (window) window.addEventListener('resize', checkWidth);
+
+    checkWidth();
+  }, [checkWidth]);
+
+  const removeListener = useCallback(() => {
+    if (window) window.removeEventListener('resize', checkWidth);
+  }, [checkWidth]);
+
+  useEffect(() => {
+    addListener();
+
+    return removeListener;
+  }, [addListener, removeListener]);
+
   const logout = useCallback(async() => {
     setUserDefaultInfo();
     removeCookie();
+
     await router.push('/auth/login');
   }, [router, setUserDefaultInfo]);
 
@@ -33,6 +84,7 @@ const Header: React.FC = () => {
           <Input
             className={styles.header__search}
             placeholder="Search for products..."
+            size={isDesktop ? 'large' : 'middle'}
           />
         </div>
         <Button

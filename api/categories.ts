@@ -1,11 +1,10 @@
-import { $axios } from '../services/axios';
-import { CategoriesApi}  from "../types/api";
+import { $axios } from '@services/axios';
+import { CategoriesApi}  from '@Types/api';
 
 const categoriesApi: CategoriesApi = {
   getCategories(params) {
-    console.log('getAuctions')
-    return $axios.get('/categories', { params })
+    return $axios.get('/categories', { params });
   },
-}
+};
 
 export default categoriesApi;

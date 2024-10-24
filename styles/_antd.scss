@@ -19,6 +19,10 @@
     }
   }
 
+  .ant-input-number-outlined {
+    width: 100%;
+  }
+
   .ant-checkbox-inner {
     width: 24px;
     height: 24px;
@@ -52,16 +56,6 @@
       font-size: 14px;
       border-radius: 16px;
     }
-  }
-
-  .ant-input:not([type="password"]),
-  .ant-input-password {
-    height: 40px;
-  }
-
-  #basic_password,
-  #basic_passwordConfirm {
-    height: 30px;
   }
 
   @media (max-width: 767px) {

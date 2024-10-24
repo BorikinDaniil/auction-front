@@ -1,15 +1,17 @@
-import { $axios } from '../services/axios';
+import { $axios } from '@services/axios';
+// Types
+import { UserApi } from '@Types/api';
 
-const userApi: { [key: string]: any } = {
-  registration(payload: object): Promise<object> {
+const userApi: UserApi = {
+  registration(payload) {
     return $axios.post('/registration', payload);
   },
 
-  login(payload: object): Promise<object> {
+  login(payload) {
     return $axios.post('/login', payload);
   },
 
-  getCurrentUser(): Promise<object> {
+  getCurrentUser() {
     return $axios.get('/user/me');
   },
 };

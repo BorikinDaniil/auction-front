@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { AuctionsList } from '../types/auctions';
+// Types
+import { AuctionsList } from '@Types/auctions';
 
 type AuctionsState = {
   auctions: AuctionsList

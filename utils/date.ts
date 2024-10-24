@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
-import { DateValue } from '../types/form';
+// Types
+import { DateValue } from '@Types/form';
 
-export const formatToTimeStamp = (date: DateValue) => {
+export const formatToTimeStamp = (date: DateValue): string => {
   if (!date) return '';
 
   return dayjs(date).format('YYYY-MM-DD HH:mmZ');

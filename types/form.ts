@@ -22,4 +22,5 @@ export type NewAuctionFormData = {
   startPrice: number,
   step: number,
   video: FilesInfo,
+  categories: string[],
 }

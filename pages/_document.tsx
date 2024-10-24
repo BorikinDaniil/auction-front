@@ -1,4 +1,4 @@
-import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
+// Components
 import Document, {
   DocumentInitialProps,
   Head,
@@ -6,7 +6,10 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document';
+// Types
 import type { DocumentContext } from 'next/document';
+
+import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 
 const MyDocument = () => (
   <Html lang="en">

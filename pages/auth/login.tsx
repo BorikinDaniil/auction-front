@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 // Components
+import Head from 'next/head';
 import Subscription from '@Components/Subscription';
-import { LOGIN_DESCRIPTION } from '@constants/content';
 import LoginForm from './components/LoginForm';
 import AuthDescription from './components/AuthDescription';
 // Constants
+import { LOGIN_DESCRIPTION } from '@constants/content';
 
 const Login: NextPage = () => (
   <div className="page d-flex flex-column flex-align-center justify-content-center">

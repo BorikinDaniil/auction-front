@@ -1,41 +1,47 @@
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { useEffect, useState } from 'react';
-import {
-  Button,
-  Form,
-  Input,
-  Upload,
-  message,
-  DatePicker,
-  UploadFile,
-  InputNumber,
-} from 'antd';
-import {
-  LockOutlined,
-  MailOutlined,
-  PictureOutlined,
-  PlaySquareOutlined,
-} from '@ant-design/icons';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 // API
 import auctionApi from '@api/auctions';
+import categoriesApi from '@api/categories';
 // Utils
 import { handleError } from '@utils/validation';
 import { formatToTimeStamp } from '@utils/date';
 import { UploadRequestOption } from 'rc-upload/lib/interface';
-import { FilesInfo, FileType, NewAuctionFormData } from '../../types/form';
-import { CategoriesList } from "../../types/categories";
-import categoriesApi from "@api/categories";
+// Types
+import { FilesInfo, FileType, NewAuctionFormData } from '@Types/form';
+import { CategoriesList } from '@Types/categories';
+import { CarouselRef } from 'antd/es/carousel';
+import { FieldError } from 'rc-field-form/es/interface';
+// Components
+import AuctionSteps from './components/AuctionSteps';
+import FirstStep from './components/steps/FirstStep';
+import SecondStep from './components/steps/SecondStep';
+import ThirdStep from './components/steps/ThirdStep';
+import {
+  Button,
+  Form,
+  Upload,
+  message,
+  UploadFile,
+  Carousel,
+} from 'antd';
 
-const { RangePicker } = DatePicker;
+const FIRST_STEP = 0;
+const STEPS_AMOUNT = 2;
 
-const { Dragger } = Upload;
+const FIRST_STEP_FIELDS = ['productName', 'productDescription', 'startPrice', 'step'];
+const SECOND_STEP_FIELDS = ['period', 'categories'];
+
 
 export const getServerSideProps: GetServerSideProps<{ categories: CategoriesList }> = (async() => {
   let categories = [];
 
   try {
     categories = (await categoriesApi.getCategories())?.data || [];
-  } catch (e: any) {}
+  } catch (e: any) {
+    categories = [];
+    console.error(e);
+  }
 
   return { props: { categories } };
 });
@@ -44,13 +50,38 @@ const NewAuction = ({ categories }: InferGetServerSidePropsType<typeof getServer
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [imagesList, setImagesList] = useState<FileType[]>([]);
   const [videosList, setVideosList] = useState<FileType[]>([]);
+  const [currentStep, setCurrentStep] = React.useState<number>(0);
+  // Refs
+  const carousel = useRef<CarouselRef | null>(null);
+  // Form
   const [form] = Form.useForm();
+  
+  const progressiveForm = {
+    ...form,
+    submit: async(): Promise<void> => {
+      let step;
+      // Allows to get the current state in the nextStep
+      setCurrentStep(currentStep => {
+        step = currentStep;
+        return currentStep;
+      });
+
+      if (step !== STEPS_AMOUNT) {
+        await nextStep();
+      } else {
+        form.submit();
+      }
+
+    },
+  };
 
   useEffect(() => {
-    console.log('categories', categories)
-  })
+    carousel?.current?.goTo(currentStep);
+  }, [currentStep, carousel]);
 
-  const validateFileType = ({ type }: UploadFile, allowedTypes: string): boolean => {
+  const isLastStep = currentStep === STEPS_AMOUNT;
+
+  const validateFileType = useCallback(({ type }: UploadFile, allowedTypes: string): boolean => {
     if (!allowedTypes) {
       return true;
     }
@@ -60,9 +91,9 @@ const NewAuction = ({ categories }: InferGetServerSidePropsType<typeof getServer
     }
 
     return false;
-  };
+  }, []);
 
-  const beforeUpload = (file: FileType, allowedTypes: string) => {
+  const beforeUpload = (file: FileType, allowedTypes: string): string | boolean => {
     const isAllowedType = validateFileType(file, allowedTypes);
     const format = allowedTypes.split('/')[1];
 
@@ -72,16 +103,16 @@ const NewAuction = ({ categories }: InferGetServerSidePropsType<typeof getServer
     }
 
     if (format === 'png') {
-      setImagesList([file]);
+      setImagesList(() => [file]);
     } else {
-      setVideosList([file]);
+      setVideosList(() => [file]);
     }
 
     return true;
   };
 
-  const handleAddRoom = async(formData: NewAuctionFormData) => {
-    setIsLoading(true);
+  const handleAddRoom = async(formData: NewAuctionFormData): Promise<void> => {
+    setIsLoading(() => true);
 
     const {
       productName,
@@ -89,7 +120,16 @@ const NewAuction = ({ categories }: InferGetServerSidePropsType<typeof getServer
       startPrice,
       step,
       period,
+      categories: selectedCategories,
     } = formData;
+
+    const formattedCategories = selectedCategories.map(category => {
+      if (category.includes('-')) return category.split('-')[1];
+
+      const subCategories = categories.find(parent => parent.id === Number(category))?.subCategories || [];
+
+      return subCategories.map(subCategory => `${subCategory.id}`);
+    }).flat(1);
 
     const [start, end] = period;
 
@@ -103,17 +143,21 @@ const NewAuction = ({ categories }: InferGetServerSidePropsType<typeof getServer
     payload.append('startPrice', startPrice.toString());
     payload.append('step', step.toString());
 
+    formattedCategories.forEach(category => payload.append('subCategories', category));
+
     try {
       await auctionApi.createAuction(payload);
-      message.success('Room was successfully saved');
+      setCurrentStep(() => FIRST_STEP);
+      progressiveForm.resetFields();
+      message.success('Auction was successfully saved. Form was reset');
     } catch (e) {
-      handleError(form, e);
+      handleError(progressiveForm, e);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const setSuccessUploadStatus = ({ onSuccess }: UploadRequestOption) => {
+  const setSuccessUploadStatus = ({ onSuccess }: UploadRequestOption): void => {
     if (onSuccess) {
       setTimeout(() => {
         onSuccess('ok');
@@ -121,160 +165,99 @@ const NewAuction = ({ categories }: InferGetServerSidePropsType<typeof getServer
     }
   };
 
-  const onChangeImagesList = (info: FilesInfo) => {
+  const onChangeImagesList = (info: FilesInfo): void => {
     if (info.file.originFileObj) setImagesList([info.file.originFileObj]);
   };
 
-  const onChangeVideosList = (info: FilesInfo) => {
+  const onChangeVideosList = (info: FilesInfo): void => {
     if (info.file.originFileObj) setVideosList([info.file.originFileObj]);
+  };
+
+  const validateFields = async(fields: string[]): Promise<void> => {
+    try {
+      await progressiveForm.validateFields(fields);
+    } catch (e) {
+      // validateFields occurs errors
+      console.error(e);
+    }
+  };
+
+  const nextStep = async() => {
+    let errors: FieldError[] = [];
+
+    if (currentStep === 0) {
+      await validateFields(FIRST_STEP_FIELDS);
+      errors = progressiveForm.getFieldsError(FIRST_STEP_FIELDS);
+    }
+
+    if (currentStep === 1) {
+      await validateFields(SECOND_STEP_FIELDS);
+      errors = progressiveForm.getFieldsError(SECOND_STEP_FIELDS);
+    }
+
+    const notEmptyErrors = errors.filter(error => error.errors?.length).length;
+
+    if (notEmptyErrors) return;
+
+    setCurrentStep(currentStep => currentStep + 1);
+  };
+
+  const prevStep = () => {
+    setCurrentStep(currentStep => currentStep - 1);
   };
 
   return (
     <div className="page">
       <div className="page__container">
         <h1>New Auction</h1>
+        <AuctionSteps
+          current={currentStep}
+        />
 
         <Form
           className="add-room__form"
           name="addRoom"
-          form={form}
+          form={progressiveForm}
+          validateTrigger="onSubmit"
           onFinish={handleAddRoom}
         >
-          <Form.Item
-            name="productName"
-            rules={[{
-              min: 4,
-              max: 256,
-              required: true,
-            }]}
-            validateTrigger="onSubmit"
+
+          <Carousel
+            dots={false}
+            ref={carousel}
           >
-            <Input
-              prefix={<MailOutlined className="site-form-item-icon" />}
-              placeholder="Room name"
-              type="text"
+            <FirstStep/>
+            <SecondStep categories={categories} />
+            <ThirdStep
+              setSuccessUploadStatus={setSuccessUploadStatus}
+              onChangeImagesList={onChangeImagesList}
+              onChangeVideosList={onChangeVideosList}
+              beforeUpload={beforeUpload}
             />
-          </Form.Item>
-
-          <Form.Item
-            name="productDescription"
-            rules={[{
-              required: true,
-              min: 4,
-              max: 1024,
-            }]}
-            validateTrigger="onSubmit"
-          >
-            <Input
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              type="text"
-              placeholder="Description"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="startPrice"
-            rules={[{
-              required: true,
-            }]}
-            validateTrigger="onSubmit"
-          >
-            <InputNumber
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              min={1}
-              max={100000000}
-              placeholder=""
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="step"
-            rules={[{
-              required: true,
-            }]}
-            validateTrigger="onSubmit"
-          >
-            <InputNumber
-              prefix={<LockOutlined className="site-form-item-icon" />}
-              min={1}
-              max={1000000}
-              placeholder=""
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="period"
-            rules={[{
-              required: true,
-            }]}
-            validateTrigger="onSubmit"
-          >
-            <RangePicker
-              showTime={{ format: 'HH:mm' }}
-              format="YYYY-MM-DD HH:mm"
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="image"
-            valuePropName="imagesList"
-            rules={[{
-              required: true,
-            }]}
-          >
-            <Dragger
-              name="file"
-              multiple={false}
-              customRequest={setSuccessUploadStatus}
-              onChange={onChangeImagesList}
-              beforeUpload={file => beforeUpload(file, 'image/png')}
-            >
-              <p className="ant-upload-drag-icon">
-                <PictureOutlined />
-              </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload room image</p>
-            </Dragger>
-          </Form.Item>
-
-          <Form.Item
-            name="video"
-            valuePropName="videosList"
-            rules={[{
-              required: true,
-            }]}
-          >
-            <Dragger
-              name="file"
-              multiple={false}
-              customRequest={setSuccessUploadStatus}
-              onChange={onChangeVideosList}
-              beforeUpload={file => beforeUpload(file, 'video/mp4')}
-            >
-              <p className="ant-upload-drag-icon">
-                <PlaySquareOutlined />
-              </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload room video</p>
-            </Dragger>
-          </Form.Item>
+          </Carousel>
 
           <div className="add-room__form--actions">
             <Form.Item>
-              {/* <Button */}
-              {/*  onClick={handleCloseModal} */}
-              {/* > */}
-              {/*  Cancel */}
-              {/* </Button> */}
-            </Form.Item>
-
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form__submit"
-                loading={isLoading}
-              >
-                Add Auction
-              </Button>
+              <div className='d-flex flex-align-center'>
+                {
+                  currentStep > 0 && <Button
+                    type="primary"
+                    className="login-form__submit mr-12"
+                    loading={isLoading}
+                    onClick={prevStep}
+                  >
+                    Prev Step
+                  </Button>
+                }
+                <Button
+                  type="primary"
+                  className="login-form__submit"
+                  htmlType="submit"
+                  loading={isLoading}
+                  >
+                    { isLastStep ? 'Add Auction' : 'Next Step' }
+                </Button>
+              </div>
             </Form.Item>
           </div>
         </Form>

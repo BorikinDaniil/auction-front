@@ -1,9 +1,10 @@
 import { FunctionComponent } from 'react';
+// Components
 import Link from 'next/link';
 // Styles
-import styles from '../../../styles/Auth.module.scss';
+import styles from '@styles/Auth.module.scss';
 // Types
-import { AuthDescriptionType } from '../../../types/content';
+import { AuthDescriptionType } from '@Types/content';
 
 const AuthDescription: FunctionComponent<{ content: AuthDescriptionType }> = ({ content }) => (
   <div className={styles['login-description']}>
@@ -18,8 +19,7 @@ const AuthDescription: FunctionComponent<{ content: AuthDescriptionType }> = ({ 
         className="mt-20"
       >
         <div className="form-link mt-20">
-          {content.linkAnswer}
-&nbsp;
+          {content.linkAnswer}&nbsp;
           <Link href={content.link}>
             {content.linkText}
           </Link>

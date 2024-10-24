@@ -3,11 +3,13 @@
     "baseUrl": ".",
     "paths": {
       "@utils/*": ["utils/*"],
-      "@ITypes/*": ["ITypes/*"],
+      "@Types/*": ["types/*"],
       "@api/*": ["api/*"],
       "@Components/*": ["components/*"],
       "@store/*": ["store/*"],
-      "@constants/*": ["constants/*"]
+      "@constants/*": ["constants/*"],
+      "@styles/*": ["styles/*"],
+      "@services/*": ["services/*"],
     },
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],

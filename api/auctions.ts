@@ -1,5 +1,6 @@
-import { $axios } from '../services/axios';
-import { AuctionApi } from "../types/api";
+import { $axios } from '@services/axios';
+import { AuctionApi } from '@Types/api';
+
 
 const auctionApi: AuctionApi = {
   getAuctions(params) {

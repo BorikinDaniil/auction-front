@@ -1,0 +1,18 @@
+.add-room {
+  &__form {
+    &__first-step {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      &__item {
+        width: calc(50% - 12px);
+
+        @media (max-width: 1024px) {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
