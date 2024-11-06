@@ -5,6 +5,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
+    // domains: ['localhost'],
+
+  },
 }
 
 module.exports = nextConfig

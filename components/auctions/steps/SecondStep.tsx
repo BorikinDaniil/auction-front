@@ -1,20 +1,16 @@
 import React from 'react';
-// Store
-import { useSelector } from 'react-redux';
-import { selectIsDesktop } from '@utils/store';
 // Types
 import { CategoriesList } from '@Types/categories';
 // Components
 import { DatePicker, Form, TreeSelect } from 'antd';
 const { RangePicker } = DatePicker;
+import AutoResizeWrapper from '@Components/AutoResizeInput';
 
 type Props = {
   categories: CategoriesList
 }
 
 const SecondStep: React.FC<Props> = ({ categories }) => {
-  const isDesktop = useSelector(selectIsDesktop);
-
   const treeData = categories.map(category => ({
     ...category,
     value: `${category.id}`,
@@ -34,11 +30,12 @@ const SecondStep: React.FC<Props> = ({ categories }) => {
           required: true,
         }]}
       >
-        <RangePicker
-          showTime={{ format: 'HH:mm' }}
-          format="YYYY-MM-DD HH:mm"
-          size={isDesktop ? 'large' : 'middle'}
-        />
+        <AutoResizeWrapper>
+          <RangePicker
+            showTime={{ format: 'HH:mm' }}
+            format="YYYY-MM-DD HH:mm"
+          />
+        </AutoResizeWrapper>
       </Form.Item>
 
       <Form.Item
@@ -47,16 +44,17 @@ const SecondStep: React.FC<Props> = ({ categories }) => {
           required: true,
         }]}
       >
-        <TreeSelect
-          showSearch
-          style={{ width: '100%' }}
-          dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-          treeCheckable={true}
-          showCheckedStrategy="SHOW_PARENT"
-          placeholder="Please select"
-          treeData={treeData}
-          size={isDesktop ? 'large' : 'middle'}
-        />
+        <AutoResizeWrapper>
+          <TreeSelect
+            showSearch
+            style={{ width: '100%' }}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            treeCheckable={true}
+            showCheckedStrategy="SHOW_PARENT"
+            placeholder="Please select"
+            treeData={treeData}
+          />
+        </AutoResizeWrapper>
       </Form.Item>
     </>
   );

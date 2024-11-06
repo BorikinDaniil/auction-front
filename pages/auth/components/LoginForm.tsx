@@ -1,20 +1,20 @@
 import type { NextComponentType } from 'next';
 import { useRouter } from 'next/router';
-// Antd
+// Components
 import {
   Button,
   Checkbox,
   Form,
   Input,
 } from 'antd';
+import AutoResizeWrapper from '@Components/AutoResizeInput'
 // Utils
 import { setCookies } from '@utils/cookies';
 import { handleError } from '@utils/validation';
-import { selectIsDesktop } from '@utils/store';
 // API
 import userApi from '@api/user';
 // Store
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUserInfo } from '@store/userSlice';
 // Types
 import { UserLogin, User } from '@Types/user';
@@ -41,8 +41,6 @@ const LoginForm: NextComponentType = () => {
     }
   };
 
-  const isDesktop = useSelector(selectIsDesktop);
-
   return (
     <Form
       name="basic"
@@ -62,8 +60,9 @@ const LoginForm: NextComponentType = () => {
         name="email"
         rules={[{ required: true, message: 'Please input your email!' }]}
       >
-        {/*TODO: unify size prop condition*/}
-        <Input size={isDesktop ? 'large' : 'middle'} />
+        <AutoResizeWrapper>
+          <Input />
+        </AutoResizeWrapper>
       </Form.Item>
 
       <Form.Item
@@ -71,7 +70,9 @@ const LoginForm: NextComponentType = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input.Password size={isDesktop ? 'large' : 'middle'} />
+        <AutoResizeWrapper>
+          <Input.Password />
+        </AutoResizeWrapper>
       </Form.Item>
       <Form.Item>
         <Checkbox>

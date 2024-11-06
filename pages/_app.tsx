@@ -49,7 +49,7 @@ MyApp.getInitialProps = async(
   try {
     user = (await userApi.getCurrentUser())?.data;
   } catch (e: any) {
-    console.error(e);
+    console.error(e.resopnse);
   }
 
   return { ...ctx, user };

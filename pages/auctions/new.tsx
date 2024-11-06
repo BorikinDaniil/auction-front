@@ -13,10 +13,10 @@ import { CategoriesList } from '@Types/categories';
 import { CarouselRef } from 'antd/es/carousel';
 import { FieldError } from 'rc-field-form/es/interface';
 // Components
-import AuctionSteps from './components/AuctionSteps';
-import FirstStep from './components/steps/FirstStep';
-import SecondStep from './components/steps/SecondStep';
-import ThirdStep from './components/steps/ThirdStep';
+import AuctionSteps from '@Components/auctions/AuctionSteps';
+import FirstStep from '@Components/auctions/steps/FirstStep';
+import SecondStep from '@Components/auctions/steps/SecondStep';
+import ThirdStep from '@Components/auctions/steps/ThirdStep';
 import {
   Button,
   Form,

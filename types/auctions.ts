@@ -1,4 +1,9 @@
-import { User } from './user';
+type AuctionOwner = {
+  id: number;
+  profile: {
+    username: string;
+  }
+}
 
 export type Auction = {
   image : string;
@@ -9,11 +14,22 @@ export type Auction = {
   startPrice: number;
   step: number;
   video: string;
-  owner: User;
+  owner: AuctionOwner;
+}
+
+enum AuctionStatus {
+  awaiting = 1,
+  started,
+  finished,
+}
+
+export type AuctionData = Auction & {
+  status: AuctionStatus;
+  id: number;
 }
 
 export type AuctionParams = {
   productName?: string;
 }
 
-export type AuctionsList = Auction[] | []
+export type AuctionsList = AuctionData[] | []

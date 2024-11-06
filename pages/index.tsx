@@ -10,13 +10,18 @@ import { Button } from 'antd';
 import auctionsApi from '@api/auctions';
 // Types
 import { AuctionsList } from '@Types/auctions';
+import AuctionCard from '@Components/auctions/AuctionCard';
+// Styles
+import styles from '@styles/Auction.module.scss';
+import AuctionFilters from "@Components/auctions/AuctionFilters";
 
 export const getServerSideProps: GetServerSideProps<{ auctions: AuctionsList }> = (async() => {
-  let auctions = [];
+  let auctions = [] as AuctionsList;
 
   try {
     auctions = (await auctionsApi.getAuctions())?.data || [];
   } catch (e: any) {
+    console.log('e.response', e.response);
     return {
       redirect: {
         destination: e.response?.status === 401 ? '/auth/login' : '/404',
@@ -48,8 +53,11 @@ const Home = ({ auctions }: InferGetServerSidePropsType<typeof getServerSideProp
     <div className="page">
       <div className="page__container">
         <h1>Auctions</h1>
-
-        <Button type="primary" onClick={createNew}>Add New</Button>
+        <Button className="mb-24" type="primary" onClick={createNew}>Add New</Button>
+        <AuctionFilters />
+        <div className={styles.auctions__list}>
+          { auctions.map(auction => <AuctionCard key={auction.id} auction={auction} />)}
+        </div>
       </div>
     </div>
   );

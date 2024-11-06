@@ -1,17 +1,14 @@
 import React from 'react';
-// Store
-import { useSelector } from 'react-redux';
-import { selectIsDesktop } from '@utils/store';
 // Components
 import { Form, Input, InputNumber } from 'antd';
 import { DollarOutlined, DropboxOutlined } from '@ant-design/icons';
+import AutoResizeWrapper from '@Components/AutoResizeInput';
 // Styles
 import styles from '@styles/Auction.module.scss';
 
 const { TextArea } = Input;
 
 const FirstStep: React.FC = () => {
-  const isDesktop = useSelector(selectIsDesktop);
 
   return (
     <div className={styles['add-room__form__first-step']}>
@@ -24,12 +21,13 @@ const FirstStep: React.FC = () => {
             required: true,
           }]}
         >
-          <Input
-            prefix={<DropboxOutlined />}
-            placeholder="Product name"
-            type="text"
-            size={isDesktop ? 'large' : 'middle'}
-          />
+          <AutoResizeWrapper>
+            <Input
+              prefix={<DropboxOutlined />}
+              placeholder="Product name"
+              type="text"
+            />
+          </AutoResizeWrapper>
         </Form.Item>
 
         <Form.Item
@@ -56,13 +54,14 @@ const FirstStep: React.FC = () => {
             required: true,
           }]}
         >
-          <InputNumber
-            size={isDesktop ? 'large' : 'middle'}
-            prefix={<DollarOutlined />}
-            min={1}
-            max={100000000}
-            placeholder="Start Price"
-          />
+          <AutoResizeWrapper>
+            <InputNumber
+              prefix={<DollarOutlined />}
+              min={1}
+              max={100000000}
+              placeholder="Start Price"
+            />
+          </AutoResizeWrapper>
         </Form.Item>
 
         <Form.Item
@@ -71,13 +70,14 @@ const FirstStep: React.FC = () => {
             required: true,
           }]}
         >
-          <InputNumber
-            prefix={<DollarOutlined />}
-            min={1}
-            max={1000000}
-            size={isDesktop ? 'large' : 'middle'}
-            placeholder="Step"
-          />
+          <AutoResizeWrapper>
+            <InputNumber
+              prefix={<DollarOutlined />}
+              min={1}
+              max={1000000}
+              placeholder="Step"
+            />
+          </AutoResizeWrapper>
         </Form.Item>
       </div>
     </div>

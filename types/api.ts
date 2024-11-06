@@ -1,25 +1,25 @@
-import { Auction, AuctionParams } from './auctions';
+import { AuctionData, AuctionParams } from './auctions';
 import { AxiosResponse } from 'axios';
 import { CategoriesList, CategoryParams } from './categories';
 import { User, UserLogin, UserRegistration } from '@Types/user';
 
 
 type AuctionsResponse = AxiosResponse & {
-    data: Auction[];
+    data: AuctionData[];
 }
 
 type CategoriesResponse = AxiosResponse & {
     data: CategoriesList;
 }
 
-type Authesponse = AxiosResponse & {
+type AuthResponse = AxiosResponse & {
     data: {
         token: string;
         user: User;
     }
 }
 
-type UserRespose = AxiosResponse & {
+type UserResponse = AxiosResponse & {
     data: User
 }
 
@@ -34,9 +34,9 @@ export type CategoriesApi = {
 }
 
 export type UserApi = {
-    registration: (payload: UserRegistration) => Promise<Authesponse| undefined>;
+    registration: (payload: UserRegistration) => Promise<AuthResponse| undefined>;
 
-    login: (payload: UserLogin) => Promise<Authesponse| undefined>;
+    login: (payload: UserLogin) => Promise<AuthResponse| undefined>;
 
-    getCurrentUser: () => Promise<UserRespose | undefined>
+    getCurrentUser: () => Promise<UserResponse | undefined>
 }

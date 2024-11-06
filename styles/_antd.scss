@@ -58,6 +58,14 @@
     }
   }
 
+  @media (max-width: 1024px) {
+    .ant-btn {
+      height: 32px;
+      font-size: 14px;
+      border-radius: 16px;
+    }
+  }
+
   @media (max-width: 767px) {
     .ant-form {
       padding: 12px;

@@ -1,14 +1,14 @@
 import { FunctionComponent } from 'react';
 // Store
 import { setUserInfo } from '@store/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // Components
 import { Button, Form, Input } from 'antd';
 import { useRouter } from 'next/router';
+import AutoResizeWrapper from '@Components/AutoResizeInput';
 // Utils
 import { setCookies } from '@utils/cookies';
 import { handleError } from '@utils/validation';
-import { selectIsDesktop } from '@utils/store';
 // API
 import userApi from '@api/user';
 // Types
@@ -20,8 +20,6 @@ const RegistrationForm: FunctionComponent = () => {
   const router = useRouter();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-
-  const isDesktop = useSelector(selectIsDesktop);
 
   const setUser = (payload: User) => dispatch(setUserInfo(payload));
 
@@ -56,7 +54,9 @@ const RegistrationForm: FunctionComponent = () => {
         name="username"
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
-        <Input size={isDesktop ? 'large' : 'middle'} />
+        <AutoResizeWrapper>
+          <Input />
+        </AutoResizeWrapper>
       </Form.Item>
 
       <Form.Item
@@ -64,7 +64,9 @@ const RegistrationForm: FunctionComponent = () => {
         name="email"
         rules={[{ required: true, message: 'Please input your email!' }]}
       >
-        <Input size={isDesktop ? 'large' : 'middle'} />
+        <AutoResizeWrapper>
+          <Input />
+        </AutoResizeWrapper>
       </Form.Item>
 
       <Form.Item
@@ -72,7 +74,9 @@ const RegistrationForm: FunctionComponent = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input.Password size={isDesktop ? 'large' : 'middle'} />
+        <AutoResizeWrapper>
+          <Input.Password />
+        </AutoResizeWrapper>
       </Form.Item>
 
       <Form.Item
@@ -92,13 +96,14 @@ const RegistrationForm: FunctionComponent = () => {
         ]}
         validateTrigger="onSubmit"
       >
-        <Input.Password
-          name="passwordConfirm"
-          type="password"
-          placeholder="Confirm password"
-          autoComplete="new-password"
-          size={isDesktop ? 'large' : 'middle'}
-        />
+        <AutoResizeWrapper>
+          <Input.Password
+            name="passwordConfirm"
+            type="password"
+            placeholder="Confirm password"
+            autoComplete="new-password"
+          />
+        </AutoResizeWrapper>
       </Form.Item>
 
       <Form.Item>
