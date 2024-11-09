@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 // Utils
 import { removeCookie } from '@utils/cookies';
-// Component
+// Components
 import Navigation from '@Components/Navigation';
-import { Button, Input } from 'antd';
-import AutoResizeWrapper from '@Components/AutoResizeInput';
+import { Button } from 'antd';
+import AInput from '@Components/controls/AInput';
 // Store
 import { setUserInfo } from '@store/userSlice';
 import { setIsMobile, setIsTablet } from '@store/uiSlice';
@@ -80,12 +80,10 @@ const Header: React.FC = () => {
       <div className={styles.header__container}>
         <Navigation />
         <div className="mr-24 w-100">
-          <AutoResizeWrapper>
-            <Input
+            <AInput
               className={styles.header__search}
               placeholder="Search for products..."
             />
-          </AutoResizeWrapper>
         </div>
         <Button
           className="small"

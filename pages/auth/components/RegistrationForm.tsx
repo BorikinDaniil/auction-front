@@ -5,7 +5,8 @@ import { useDispatch } from 'react-redux';
 // Components
 import { Button, Form, Input } from 'antd';
 import { useRouter } from 'next/router';
-import AutoResizeWrapper from '@Components/AutoResizeInput';
+import AInput from '@Components/controls/AInput';
+import AInputPassword from '@Components/controls/AInputPassword';
 // Utils
 import { setCookies } from '@utils/cookies';
 import { handleError } from '@utils/validation';
@@ -54,9 +55,7 @@ const RegistrationForm: FunctionComponent = () => {
         name="username"
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
-        <AutoResizeWrapper>
-          <Input />
-        </AutoResizeWrapper>
+        <AInput />
       </Form.Item>
 
       <Form.Item
@@ -64,9 +63,7 @@ const RegistrationForm: FunctionComponent = () => {
         name="email"
         rules={[{ required: true, message: 'Please input your email!' }]}
       >
-        <AutoResizeWrapper>
-          <Input />
-        </AutoResizeWrapper>
+        <AInput />
       </Form.Item>
 
       <Form.Item
@@ -74,9 +71,7 @@ const RegistrationForm: FunctionComponent = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <AutoResizeWrapper>
-          <Input.Password />
-        </AutoResizeWrapper>
+        <AInputPassword />
       </Form.Item>
 
       <Form.Item
@@ -96,14 +91,11 @@ const RegistrationForm: FunctionComponent = () => {
         ]}
         validateTrigger="onSubmit"
       >
-        <AutoResizeWrapper>
-          <Input.Password
-            name="passwordConfirm"
-            type="password"
-            placeholder="Confirm password"
-            autoComplete="new-password"
-          />
-        </AutoResizeWrapper>
+        <AInputPassword
+          type="password"
+          placeholder="Confirm password"
+          autoComplete="new-password"
+        />
       </Form.Item>
 
       <Form.Item>

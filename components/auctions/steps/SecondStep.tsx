@@ -2,9 +2,9 @@ import React from 'react';
 // Types
 import { CategoriesList } from '@Types/categories';
 // Components
-import { DatePicker, Form, TreeSelect } from 'antd';
-const { RangePicker } = DatePicker;
-import AutoResizeWrapper from '@Components/AutoResizeInput';
+import { Form } from 'antd';
+import ARangePicker from '@Components/controls/ARangePicker';
+import ATreeSelect from '@Components/controls/ATreeSelect';
 
 type Props = {
   categories: CategoriesList
@@ -30,12 +30,10 @@ const SecondStep: React.FC<Props> = ({ categories }) => {
           required: true,
         }]}
       >
-        <AutoResizeWrapper>
-          <RangePicker
-            showTime={{ format: 'HH:mm' }}
-            format="YYYY-MM-DD HH:mm"
-          />
-        </AutoResizeWrapper>
+        <ARangePicker
+          showTime={{ format: 'HH:mm' }}
+          format="YYYY-MM-DD HH:mm"
+        />
       </Form.Item>
 
       <Form.Item
@@ -44,17 +42,15 @@ const SecondStep: React.FC<Props> = ({ categories }) => {
           required: true,
         }]}
       >
-        <AutoResizeWrapper>
-          <TreeSelect
-            showSearch
-            style={{ width: '100%' }}
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            treeCheckable={true}
-            showCheckedStrategy="SHOW_PARENT"
-            placeholder="Please select"
-            treeData={treeData}
-          />
-        </AutoResizeWrapper>
+        <ATreeSelect
+          showSearch
+          style={{ width: '100%' }}
+          dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+          treeCheckable={true}
+          showCheckedStrategy="SHOW_PARENT"
+          placeholder="Please select"
+          treeData={treeData}
+        />
       </Form.Item>
     </>
   );

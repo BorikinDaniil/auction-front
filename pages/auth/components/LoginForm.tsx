@@ -7,7 +7,7 @@ import {
   Form,
   Input,
 } from 'antd';
-import AutoResizeWrapper from '@Components/AutoResizeInput'
+import AInput from '@Components/controls/AInput';
 // Utils
 import { setCookies } from '@utils/cookies';
 import { handleError } from '@utils/validation';
@@ -20,6 +20,7 @@ import { setUserInfo } from '@store/userSlice';
 import { UserLogin, User } from '@Types/user';
 // Styles
 import styles from '@styles/Auth.module.scss';
+import AInputPassword from "@Components/controls/AInputPassword";
 
 const LoginForm: NextComponentType = () => {
   const router = useRouter();
@@ -60,9 +61,7 @@ const LoginForm: NextComponentType = () => {
         name="email"
         rules={[{ required: true, message: 'Please input your email!' }]}
       >
-        <AutoResizeWrapper>
-          <Input />
-        </AutoResizeWrapper>
+          <AInput />
       </Form.Item>
 
       <Form.Item
@@ -70,9 +69,7 @@ const LoginForm: NextComponentType = () => {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <AutoResizeWrapper>
-          <Input.Password />
-        </AutoResizeWrapper>
+        <AInputPassword />
       </Form.Item>
       <Form.Item>
         <Checkbox>

@@ -1,8 +1,9 @@
 import React from 'react';
 // Components
-import { Form, Input, InputNumber } from 'antd';
+import { Form, Input } from 'antd';
 import { DollarOutlined, DropboxOutlined } from '@ant-design/icons';
-import AutoResizeWrapper from '@Components/AutoResizeInput';
+import AInput from '@Components/controls/AInput';
+import AInputNumber from '@Components/controls/AInputNumber';
 // Styles
 import styles from '@styles/Auction.module.scss';
 
@@ -21,13 +22,11 @@ const FirstStep: React.FC = () => {
             required: true,
           }]}
         >
-          <AutoResizeWrapper>
-            <Input
-              prefix={<DropboxOutlined />}
-              placeholder="Product name"
-              type="text"
-            />
-          </AutoResizeWrapper>
+          <AInput
+            prefix={<DropboxOutlined />}
+            placeholder="Product name"
+            type="text"
+          />
         </Form.Item>
 
         <Form.Item
@@ -54,14 +53,12 @@ const FirstStep: React.FC = () => {
             required: true,
           }]}
         >
-          <AutoResizeWrapper>
-            <InputNumber
-              prefix={<DollarOutlined />}
-              min={1}
-              max={100000000}
-              placeholder="Start Price"
-            />
-          </AutoResizeWrapper>
+          <AInputNumber
+            prefix={<DollarOutlined />}
+            min={1}
+            max={100000000}
+            placeholder="Start Price"
+          />
         </Form.Item>
 
         <Form.Item
@@ -70,14 +67,12 @@ const FirstStep: React.FC = () => {
             required: true,
           }]}
         >
-          <AutoResizeWrapper>
-            <InputNumber
-              prefix={<DollarOutlined />}
-              min={1}
-              max={1000000}
-              placeholder="Step"
-            />
-          </AutoResizeWrapper>
+          <AInputNumber
+            prefix={<DollarOutlined />}
+            min={1}
+            max={1000000}
+            placeholder="Step"
+          />
         </Form.Item>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 import { DropboxOutlined } from '@ant-design/icons';
-import AutoResizeWrapper from '@Components/AutoResizeInput';
+import AInput from '@Components/controls/AInput';
 
 
 const AuctionFilters: React.FC = () => {
@@ -15,13 +15,11 @@ const AuctionFilters: React.FC = () => {
           required: true,
         }]}
       >
-        <AutoResizeWrapper>
-          <Input
+          <AInput
             prefix={<DropboxOutlined />}
             placeholder="Product name"
             type="text"
           />
-        </AutoResizeWrapper>
       </Form.Item>
     </div>
   );
