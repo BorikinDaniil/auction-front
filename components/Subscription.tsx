@@ -19,25 +19,29 @@ const Subscription: FunctionComponent = () => {
 
       <div className={styles.subscription__form}>
         <Form
-          name="subscription"
-          layout="vertical"
+          name='subscription'
+          layout='vertical'
           form={form}
           className={styles['registration-form']}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          autoComplete="off"
+          autoComplete='off'
         >
           <Form.Item
-            name="email"
+            name='email'
             className={styles['subscription__form--form-item']}
-            rules={[{ required: true, message: 'Please input your email!', type: 'email' }]}
+            rules={[
+              {
+                required: true,
+                message: 'Please input your email!',
+                type: 'email',
+              },
+            ]}
           >
-            <Input size="large" placeholder="Enter your email address" />
+            <Input size='large' placeholder='Enter your email address' />
           </Form.Item>
 
-          <Button className="small w-100">
-            Subscribe to Newsletter
-          </Button>
+          <Button className='small w-100'>Subscribe to Newsletter</Button>
         </Form>
       </div>
     </div>

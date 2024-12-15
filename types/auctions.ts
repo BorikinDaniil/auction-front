@@ -1,12 +1,14 @@
+import { Pagination } from '@Types/common';
+
 type AuctionOwner = {
   id: number;
   profile: {
     username: string;
-  }
-}
+  };
+};
 
 export type Auction = {
-  image : string;
+  image: string;
   startAt: string;
   endAt: string;
   productDescription: string;
@@ -15,7 +17,7 @@ export type Auction = {
   step: number;
   video: string;
   owner: AuctionOwner;
-}
+};
 
 enum AuctionStatus {
   awaiting = 1,
@@ -26,10 +28,24 @@ enum AuctionStatus {
 export type AuctionData = Auction & {
   status: AuctionStatus;
   id: number;
-}
+};
 
-export type AuctionParams = {
+export type AuctionsList = AuctionData[] | [];
+
+export type AuctionsFilter = {
   productName?: string;
-}
+  subCategories?: string[];
+  status?: AuctionStatus | string;
+  startAtFrom?: string;
+  startAtTo?: string;
+  endAtFrom?: string;
+  endAtTo?: string;
+  page?: number;
+  priceFrom: number;
+  priceTo: number;
+};
 
-export type AuctionsList = AuctionData[] | []
+export type AuctionsData = {
+  auctions: AuctionData[];
+  pagination: Pagination;
+};

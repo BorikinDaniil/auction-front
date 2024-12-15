@@ -13,15 +13,21 @@ import { setIsMobile, setIsTablet } from '@store/uiSlice';
 // Styles
 import styles from '@styles/Layout.module.scss';
 // Types
-import { RootState } from '@Types/user';
+import { RootState } from '@Types/other';
 
 const Header: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const setIsMobileView = useCallback((payload: boolean) => dispatch(setIsMobile(payload)), [dispatch]);
-  const setIsTabletView = useCallback((payload: boolean) => dispatch(setIsTablet(payload)), [dispatch]);
-  
+  const setIsMobileView = useCallback(
+    (payload: boolean) => dispatch(setIsMobile(payload)),
+    [dispatch],
+  );
+  const setIsTabletView = useCallback(
+    (payload: boolean) => dispatch(setIsTablet(payload)),
+    [dispatch],
+  );
+
   const isTablet = useSelector((state: RootState) => state.ui.isTablet);
   const isMobile = useSelector((state: RootState) => state.ui.isMobile);
 
@@ -68,7 +74,7 @@ const Header: React.FC = () => {
     return removeListener;
   }, [addListener, removeListener]);
 
-  const logout = useCallback(async() => {
+  const logout = useCallback(async () => {
     setUserDefaultInfo();
     removeCookie();
 
@@ -79,16 +85,13 @@ const Header: React.FC = () => {
     <div className={styles.header}>
       <div className={styles.header__container}>
         <Navigation />
-        <div className="mr-24 w-100">
-            <AInput
-              className={styles.header__search}
-              placeholder="Search for products..."
-            />
+        <div className='mr-24 w-100'>
+          <AInput
+            className={styles.header__search}
+            placeholder='Search for products...'
+          />
         </div>
-        <Button
-          className="small"
-          onClick={logout}
-        >
+        <Button className='small' onClick={logout}>
           Logout
         </Button>
       </div>

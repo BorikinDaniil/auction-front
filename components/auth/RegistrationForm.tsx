@@ -1,9 +1,9 @@
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 // Store
 import { setUserInfo } from '@store/userSlice';
 import { useDispatch } from 'react-redux';
 // Components
-import { Button, Form, Input } from 'antd';
+import { Button, Form } from 'antd';
 import { useRouter } from 'next/router';
 import AInput from '@Components/controls/AInput';
 import AInputPassword from '@Components/controls/AInputPassword';
@@ -24,13 +24,14 @@ const RegistrationForm: FunctionComponent = () => {
 
   const setUser = (payload: User) => dispatch(setUserInfo(payload));
 
-  const onFinish = async(data: UserRegistration): Promise<void> => {
+  const onFinish = async (data: UserRegistration): Promise<void> => {
     try {
       const { token, user } = (await userApi.registration(data))?.data || {};
 
       setCookies('accessToken', token);
       setUser(user);
       await router.push('/');
+      /* eslint-disable-next-line */
     } catch (e: any) {
       handleError(form, e);
     }
@@ -38,72 +39,69 @@ const RegistrationForm: FunctionComponent = () => {
 
   return (
     <Form
-      name="basic"
-      layout="vertical"
+      name='basic'
+      layout='vertical'
       form={form}
       className={styles['registration-form']}
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      autoComplete="off"
+      autoComplete='off'
     >
-      <h1>
-        Registration
-      </h1>
+      <h1>Registration</h1>
 
       <Form.Item
-        label="Username"
-        name="username"
+        label='Username'
+        name='username'
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
         <AInput />
       </Form.Item>
 
       <Form.Item
-        label="Email"
-        name="email"
+        label='Email'
+        name='email'
         rules={[{ required: true, message: 'Please input your email!' }]}
       >
         <AInput />
       </Form.Item>
 
       <Form.Item
-        label="Password"
-        name="password"
+        label='Password'
+        name='password'
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
         <AInputPassword />
       </Form.Item>
 
       <Form.Item
-        name="passwordConfirm"
-        label="Password confirmation"
-        rules={[{
-          required: true,
-        },
-        ({ getFieldValue }) => ({
-          validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-              return Promise.resolve();
-            }
-            return Promise.reject(new Error('The two passwords that you entered do not match!'));
+        name='passwordConfirm'
+        label='Password confirmation'
+        rules={[
+          {
+            required: true,
           },
-        }),
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(
+                new Error('The two passwords that you entered do not match!'),
+              );
+            },
+          }),
         ]}
-        validateTrigger="onSubmit"
+        validateTrigger='onSubmit'
       >
         <AInputPassword
-          type="password"
-          placeholder="Confirm password"
-          autoComplete="new-password"
+          type='password'
+          placeholder='Confirm password'
+          autoComplete='new-password'
         />
       </Form.Item>
 
       <Form.Item>
-        <Button
-          className="w-100 mt-20"
-          type="primary"
-          htmlType="submit"
-        >
+        <Button className='w-100 mt-20' type='primary' htmlType='submit'>
           Register
         </Button>
       </Form.Item>

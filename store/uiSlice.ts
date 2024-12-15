@@ -11,13 +11,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState: getInitialState(),
   reducers: {
-    setIsMobile(state, data:PayloadAction<boolean>) {
+    setIsMobile(state, data: PayloadAction<boolean>) {
       const { payload } = data;
       state.isMobile = payload;
 
       if (payload) state.isTablet = false;
     },
-    setIsTablet(state, data:PayloadAction<boolean>) {
+    setIsTablet(state, data: PayloadAction<boolean>) {
       const { payload } = data;
       state.isTablet = payload;
 

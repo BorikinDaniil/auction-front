@@ -4,4 +4,4 @@ export type AuthDescriptionType = {
   linkAnswer: string;
   linkText: string;
   link: string;
-}
+};

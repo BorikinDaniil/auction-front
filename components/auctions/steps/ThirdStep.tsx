@@ -13,59 +13,65 @@ type Props = {
   onChangeImagesList: (info: FilesInfo) => void;
   onChangeVideosList: (info: FilesInfo) => void;
   beforeUpload: (file: FileType, allowedTypes: string) => string | boolean;
-}
+};
 
-const ThirdStep: React.FC<Props> = (
-  {
-    setSuccessUploadStatus,
-    onChangeImagesList,
-    onChangeVideosList,
-    beforeUpload,
-  },
-) => (
-    <>
-      <Form.Item
-        name="image"
-        valuePropName="imagesList"
-        rules={[{
+const ThirdStep: React.FC<Props> = ({
+  setSuccessUploadStatus,
+  onChangeImagesList,
+  onChangeVideosList,
+  beforeUpload,
+}) => (
+  <>
+    <Form.Item
+      name='image'
+      valuePropName='imagesList'
+      rules={[
+        {
           required: true,
-        }]}
+        },
+      ]}
+    >
+      <Dragger
+        name='file'
+        multiple={false}
+        customRequest={setSuccessUploadStatus}
+        onChange={onChangeImagesList}
+        beforeUpload={file => beforeUpload(file, 'image/png')}
       >
-        <Dragger
-          name="file"
-          multiple={false}
-          customRequest={setSuccessUploadStatus}
-          onChange={onChangeImagesList}
-          beforeUpload={file => beforeUpload(file, 'image/png')}
-        >
-          <p className="ant-upload-drag-icon">
-            <PictureOutlined />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload room image</p>
-        </Dragger>
-      </Form.Item>
+        <p className='ant-upload-drag-icon'>
+          <PictureOutlined />
+        </p>
+        <p className='ant-upload-text'>
+          Click or drag file to this area to upload room image
+        </p>
+      </Dragger>
+    </Form.Item>
 
-      <Form.Item
-        name="video"
-        valuePropName="videosList"
-        rules={[{
+    <Form.Item
+      name='video'
+      valuePropName='videosList'
+      rules={[
+        {
           required: true,
-        }]}
+        },
+      ]}
+    >
+      <Dragger
+        name='file'
+        multiple={false}
+        customRequest={setSuccessUploadStatus}
+        onChange={onChangeVideosList}
+        beforeUpload={file => beforeUpload(file, 'video/mp4')}
       >
-        <Dragger
-          name="file"
-          multiple={false}
-          customRequest={setSuccessUploadStatus}
-          onChange={onChangeVideosList}
-          beforeUpload={file => beforeUpload(file, 'video/mp4')}
-        >
-          <p className="ant-upload-drag-icon">
-            <PlaySquareOutlined />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload room video</p>
-        </Dragger>
-      </Form.Item>
-    </>
+        <p className='ant-upload-drag-icon'>
+          <PlaySquareOutlined />
+        </p>
+        <p className='ant-upload-text'>
+          Click or drag file to this area to upload room video
+        </p>
+      </Dragger>
+    </Form.Item>
+  </>
 );
 
 export default ThirdStep;

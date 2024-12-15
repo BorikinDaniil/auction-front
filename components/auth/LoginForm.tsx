@@ -1,13 +1,9 @@
 import type { NextComponentType } from 'next';
 import { useRouter } from 'next/router';
 // Components
-import {
-  Button,
-  Checkbox,
-  Form,
-  Input,
-} from 'antd';
+import { Button, Checkbox, Form } from 'antd';
 import AInput from '@Components/controls/AInput';
+import AInputPassword from '@Components/controls/AInputPassword';
 // Utils
 import { setCookies } from '@utils/cookies';
 import { handleError } from '@utils/validation';
@@ -20,7 +16,6 @@ import { setUserInfo } from '@store/userSlice';
 import { UserLogin, User } from '@Types/user';
 // Styles
 import styles from '@styles/Auth.module.scss';
-import AInputPassword from "@Components/controls/AInputPassword";
 
 const LoginForm: NextComponentType = () => {
   const router = useRouter();
@@ -30,13 +25,14 @@ const LoginForm: NextComponentType = () => {
 
   const setUser = (payload: User) => dispatch(setUserInfo(payload));
 
-  const onFinish = async(data: UserLogin) => {
+  const onFinish = async (data: UserLogin) => {
     try {
       const { token, user } = (await userApi.login(data))?.data || {};
 
       setCookies('accessToken', token);
       setUser(user);
       await router.push('/');
+      /* eslint-disable-next-line */
     } catch (e: any) {
       handleError(form, e);
     }
@@ -44,45 +40,37 @@ const LoginForm: NextComponentType = () => {
 
   return (
     <Form
-      name="basic"
-      layout="vertical"
+      name='basic'
+      layout='vertical'
       form={form}
       className={styles['login-form']}
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      autoComplete="off"
+      autoComplete='off'
     >
-      <h1 className="mb-30">
-        Login
-      </h1>
+      <h1 className='mb-30'>Login</h1>
 
       <Form.Item
-        label="Email"
-        name="email"
+        label='Email'
+        name='email'
         rules={[{ required: true, message: 'Please input your email!' }]}
       >
-          <AInput />
+        <AInput />
       </Form.Item>
 
       <Form.Item
-        label="Password"
-        name="password"
+        label='Password'
+        name='password'
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
         <AInputPassword />
       </Form.Item>
       <Form.Item>
-        <Checkbox>
-          Remember me
-        </Checkbox>
+        <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
       <Form.Item>
-        <Button
-          className="w-100 mt-20"
-          type="primary"
-          htmlType="submit"
-        >
+        <Button className='w-100 mt-20' type='primary' htmlType='submit'>
           Login
         </Button>
       </Form.Item>

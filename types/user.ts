@@ -8,12 +8,12 @@ export type User = {
 export type UserPayload = {
   email: string;
   username: string;
-}
+};
 
 export type UserLogin = {
   email: string;
   password: string;
-}
+};
 
 export type UserRegistration = {
   password: string;
@@ -24,6 +24,4 @@ export type Errors = {
   errors: {
     [key: string]: string;
   };
-}
-
-export type RootState = ReturnType<typeof store.getState>
+};

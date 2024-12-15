@@ -12,15 +12,22 @@ type RangeValue = [DateValue, DateValue];
 export type FilesInfo = {
   file: UploadFile;
   fileList: UploadFile[];
-}
+};
 
 export type NewAuctionFormData = {
-  image : FilesInfo;
+  image: FilesInfo;
   period: RangeValue;
   productDescription: string;
   productName: string;
-  startPrice: number,
-  step: number,
-  video: FilesInfo,
-  categories: string[],
-}
+  startPrice: number;
+  step: number;
+  video: FilesInfo;
+  categories: string[];
+};
+
+export type SelectOption = {
+  label: string;
+  value: string;
+};
+
+export type SelectOptions = SelectOption[];

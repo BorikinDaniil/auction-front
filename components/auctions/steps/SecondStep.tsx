@@ -7,8 +7,8 @@ import ARangePicker from '@Components/controls/ARangePicker';
 import ATreeSelect from '@Components/controls/ATreeSelect';
 
 type Props = {
-  categories: CategoriesList
-}
+  categories: CategoriesList;
+};
 
 const SecondStep: React.FC<Props> = ({ categories }) => {
   const treeData = categories.map(category => ({
@@ -25,30 +25,34 @@ const SecondStep: React.FC<Props> = ({ categories }) => {
   return (
     <>
       <Form.Item
-        name="period"
-        rules={[{
-          required: true,
-        }]}
+        name='period'
+        rules={[
+          {
+            required: true,
+          },
+        ]}
       >
         <ARangePicker
           showTime={{ format: 'HH:mm' }}
-          format="YYYY-MM-DD HH:mm"
+          format='YYYY-MM-DD HH:mm'
         />
       </Form.Item>
 
       <Form.Item
-        name="categories"
-        rules={[{
-          required: true,
-        }]}
+        name='categories'
+        rules={[
+          {
+            required: true,
+          },
+        ]}
       >
         <ATreeSelect
           showSearch
           style={{ width: '100%' }}
           dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-          treeCheckable={true}
-          showCheckedStrategy="SHOW_PARENT"
-          placeholder="Please select"
+          treeCheckable
+          showCheckedStrategy='SHOW_PARENT'
+          placeholder='Please select'
           treeData={treeData}
         />
       </Form.Item>

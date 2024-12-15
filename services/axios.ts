@@ -6,7 +6,6 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 // Types
 import { GetServerSidePropsContext } from 'next';
 
-
 const accessToken = getToken();
 let context = <GetServerSidePropsContext>{};
 
@@ -37,7 +36,7 @@ $axios.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 $axios.interceptors.response.use(
   response => response,
-  async(error: AxiosError) => {
+  async (error: AxiosError) => {
     // check conditions to refresh token
     if (error.response?.status === 401) {
       if (context?.res?.setHeader) {

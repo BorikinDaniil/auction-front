@@ -1,14 +1,15 @@
 import { $axios } from '@services/axios';
 import { AuctionApi } from '@Types/api';
 
-
 const auctionApi: AuctionApi = {
   getAuctions(params) {
     return $axios.get('/auctions', { params });
   },
 
   createAuction(payload) {
-    return $axios.post('/auctions', payload, { headers: { 'Content-Type': 'multipart/form-data' } });
+    return $axios.post('/auctions', payload, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
   },
 };
 

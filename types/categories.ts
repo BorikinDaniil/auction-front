@@ -1,16 +1,19 @@
 export type CategoryParams = {
-    name: string;
-}
+  name?: string;
+  id?: number;
+};
 
-type SubCategory = {
-    id: number;
-    name: string;
-}
+export type SubCategory = {
+  id: number;
+  name: string;
+};
+
+export type SubCategories = SubCategory[];
 
 export type Category = {
-    id: number;
-    name: string;
-    subCategories: SubCategory[]
-}
+  id: number;
+  name: string;
+  subCategories: SubCategory[];
+};
 
-export type CategoriesList = Category[]
+export type CategoriesList = Category[];

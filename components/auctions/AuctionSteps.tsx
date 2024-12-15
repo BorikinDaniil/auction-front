@@ -8,8 +8,8 @@ import {
 import { StepProps, Steps } from 'antd';
 
 type StepsProps = {
-  current: number
-}
+  current: number;
+};
 
 const items = [
   {
@@ -27,13 +27,9 @@ const items = [
 ] as StepProps[];
 
 const AuctionSteps: React.FC<StepsProps> = ({ current }) => {
-
   return (
-    <div className="mb-12">
-      <Steps
-        items={items}
-        current={current}
-      />
+    <div className='mb-12'>
+      <Steps items={items} current={current} />
     </div>
   );
 };

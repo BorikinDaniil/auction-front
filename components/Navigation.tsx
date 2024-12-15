@@ -13,22 +13,16 @@ import styles from '@styles/Layout.module.scss';
 
 const items: MenuProps['items'] = [
   {
-    label: (
-      <Link href="/">
-        Home
-      </Link>
-    ),
+    label: <Link href='/'>Home</Link>,
     key: '/',
     icon: <MailOutlined />,
   },
 ];
 
-const authItems: MenuProps['items'] = [
-
-];
+const authItems: MenuProps['items'] = [];
 
 const Navigation: React.FC = () => {
-  const [current, setCurrent] = useState('home');
+  const [current] = useState('home');
 
   const router = useRouter();
 
@@ -38,11 +32,7 @@ const Navigation: React.FC = () => {
 
   return (
     <div className={styles.navigation}>
-      <Menu
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={menuItems}
-      />
+      <Menu selectedKeys={[current]} mode='horizontal' items={menuItems} />
     </div>
   );
 };

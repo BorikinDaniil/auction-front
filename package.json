@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,yaml,yml}\"",
+    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,yaml,yml}\"",
+    "prepare": "husky",
+    "check-types": "tsc --pretty --noEmit",
+    "test-all": "npm run check-format && npm run lint && npm run check-types && npm run build"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -29,10 +34,18 @@
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
     "autoprefixer": "^10.4.16",
-    "eslint": "8.20.0",
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "12.2.3",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.13.0",
+    "husky": "^9.1.7",
     "postcss": "^8.4.31",
+    "prettier": "^3.4.2",
     "sass": "^1.54.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "typescript-eslint": "^8.18.0"
   }
 }

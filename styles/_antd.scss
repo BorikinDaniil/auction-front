@@ -19,6 +19,12 @@
     }
   }
 
+  .ant-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
   .ant-input-number-outlined {
     width: 100%;
   }
@@ -56,6 +62,11 @@
       font-size: 14px;
       border-radius: 16px;
     }
+  }
+
+  .ant-skeleton-image {
+    width: 100% !important;
+    height: 100% !important;
   }
 
   @media (max-width: 1024px) {

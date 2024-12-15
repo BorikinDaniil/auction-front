@@ -1,4 +1,4 @@
-import '@styles/globals.scss';
+import React from 'react';
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app';
 // Store
 import { Provider } from 'react-redux';
@@ -15,17 +15,16 @@ import { antdTheme } from '@constants/antd';
 import { User } from '@Types/user';
 // Services
 import { setContext } from '@services/axios';
+// Styles
+import '@styles/globals.scss';
 
-
-type AppOwnProps = { user: User }
+type AppOwnProps = { user: User };
 
 const MyApp = ({ Component, pageProps, user }: AppProps & AppOwnProps) => {
   if (user) store.dispatch(setUserInfo(user));
 
   return (
-    <ConfigProvider
-      theme={antdTheme}
-    >
+    <ConfigProvider theme={antdTheme}>
       <Provider store={store}>
         <Header />
         <Component {...pageProps} />
@@ -34,10 +33,11 @@ const MyApp = ({ Component, pageProps, user }: AppProps & AppOwnProps) => {
   );
 };
 
-MyApp.getInitialProps = async(
+MyApp.getInitialProps = async (
   context: AppContext,
 ): Promise<AppOwnProps & AppInitialProps> => {
   const ctx: AppInitialProps = await App.getInitialProps(context);
+  /* eslint-disable-next-line */
   const serverSidePropsContext: any = context.ctx;
   const accessToken = serverSidePropsContext?.req?.cookies?.accessToken;
   let user: User = null;
@@ -48,6 +48,7 @@ MyApp.getInitialProps = async(
 
   try {
     user = (await userApi.getCurrentUser())?.data;
+    /* eslint-disable-next-line */
   } catch (e: any) {
     console.error(e.resopnse);
   }

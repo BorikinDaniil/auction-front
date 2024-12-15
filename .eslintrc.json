@@ -1,29 +1,39 @@
 {
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
   "extends": [
      // "airbnb",
     // "airbnb/hooks",
     // "airbnb-typescript",
     "next/core-web-vitals",
     "eslint:recommended",
-    "plugin:react/recommended"
-    // "next"
+    // "next",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "parser": "babel-eslint",
-    "sourceType": "module",
-    "ecmaVersion": 2020
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
   "rules": {
-    "no-unused-vars": "warn",
-    "operator-linebreak": [2, "before"],
-    "space-before-function-paren": [
-      "error",
-      "never"
-    ],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "semi": ["error", "always"],
     "linebreak-style": 0,
     "quotes": ["error", "single", "avoid-escape"],
-    "comma-dangle": ["error", "always-multiline"],
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+      }],
     "import/no-cycle": 0,
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "arrow-parens": ["error", "as-needed"],
@@ -31,32 +41,16 @@
     "no-console": "off",
     "camelcase": "off",
     "react/react-in-jsx-scope": "off",
-    "react/no-unescaped-entities": "off"
-//    "react/jsx-props-no-spreading": "off",
-//    "import/extensions": [
-//      "error",
-//      "ignorePackages",
-//      {
-//        "js": "never",
-//        "jsx": "never",
-//        "ts": "never",
-//        "tsx": "never"
-//      }
-//    ],
-//    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
-//    "react/function-component-definition": [
-//      2,
-//      {
-//        "namedComponents": "arrow-function",
-//        "unnamedComponents": "arrow-function"
-//      }
-//    ]
-//  },
-//  "settings": {
-//    "import/core-modules": [
-//      "@ant-design/icons",
-//      "rc-upload/lib/interface",
-//      "@ant-design/cssinjs"
-//    ]
+    "react/no-unescaped-entities": "off",
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "space-before-function-paren": "off"
   }
 }
